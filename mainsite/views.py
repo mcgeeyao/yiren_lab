@@ -7,7 +7,6 @@ from django.http import HttpResponse ,Http404
 from django.db.models import Count
 from datetime import datetime
 from mainsite import forms
-import numpy as np
 from .models import *
 
 # Create your views here.
