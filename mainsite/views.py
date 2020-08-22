@@ -347,7 +347,7 @@ def mypy(request):
                 tolsum[j].append(0)
                 if 'userid' in request.session:
                     if locteamuser[k]['userid']==userid:
-                        sesuser[j].append('style="color:#ee3333;"')
+                        sesuser[j].append('style="background-color:#ee3333;"')
                     else:
                         sesuser[j].append('')
 
