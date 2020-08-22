@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{name}}</h1>
+    <p>{{userid}}</p>
+    <p>{{user.get_course_display}}</p> 
+    <table id='score' style="text-align: center;display: inline-block;">
+        <tr>
+            {% for i in weeks %}
+                <th colspan="4">{{i.name}}</th>
+            {% endfor %}
+            <th>積分</th>
+        </tr>
+        <tr>
+            {% for scor in scors %}
+        
+                <td>{{scor.num1}}</td>
+                <td>{{scor.num2}}</td>
+                <td>{{scor.num3}}</td>
+                <td>{{scor.num4}}</td>
+            {% endfor %}
+            <td>{{a}}</td>
+        </tr>
+    </table><br>
+    <p>
+        <a href="/changepsw/" class="btn">更改密碼</a>
+    </p>
+{% endblock %}  

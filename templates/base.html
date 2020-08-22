@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            
+            body{
+                font-size: 20px;font-family:"LiHei Pro";margin: 0px;
+            }
+            .home{
+                text-decoration: none;color:unset
+            }
+            .homed{
+                background-color: #208029;height: 100px;font-size: 50px;color: #dddddd;
+                text-align:center;line-height:100px;margin: 0px;width: 100%;
+            }
+            form{
+                line-height: 30px;
+            }
+            .in{
+                width:200px;height:25px;
+            }          
+            .btn {
+                border: 2px solid black;
+                background-color: white;
+                color: black;text-decoration:none;
+                padding: 10px 20px;
+                font-size: 16px;border-radius: 10px;
+                cursor: pointer;border-color: #4CAF50;
+                color: green;
+            }
+            .btn:hover{
+                background-color: #4CAF50;
+                color: white;
+            }
+            .btn:active{
+                background-color: #208029;
+                color: white;
+            }
+            input:active{
+                background-color: #208029;
+                color: white;
+            }
+            input:focus{
+                background-color: #4CAF50;
+                color: white;
+            }
+            input {
+                border: 2px solid black;
+                background-color: white;
+                color: black;text-decoration:none;
+                padding: 5px 10px;margin: 5px;
+                font-size: 16px;border-radius: 10px;
+                cursor: pointer;border-color: #4CAF50;
+                color: green;
+            }
+            select:active{
+                background-color: #208029;
+                color: white;
+            }
+            select:focus{
+                background-color: #4CAF50;
+                color: white;
+            }
+            select {
+                border: 2px solid black;
+                background-color: white;
+                color: black;text-decoration:none;
+                padding: 5px 10px;margin: 5px;
+                font-size: 16px;border-radius: 10px;
+                cursor: pointer;border-color: #4CAF50;
+                color: green;
+            }
+            .bottonbut{
+                color: #777777;
+                text-align: center;
+                padding:20px 5px;
+                text-decoration: none;
+                width: auto;cursor: pointer;
+            }
+            .bottonbut:hover{
+                color: #333333;
+            }
+            table#score,#score th,#score td {
+                border-bottom:2px solid #010101;border-collapse: collapse;border-color: #555555;
+                
+            }
+            table#score {
+                margin-top: 20px ;background-color:#90aa90;
+                border-radius: 10px;
+                overflow-x:auto;max-width: 80%;
+                
+            }
+            #score th{
+                font-size: 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #106610;padding:10px;max-width: 100cm;text-align:middle;margin-top: 10px;
+                color: #f0f0f0;border-color: #aaaaaa;
+            }
+            #score td {
+                padding:10px;max-width: 100cm;text-align:center;
+                text-align:middle;margin-top: 40px;
+            }
+            #score tr:nth-child(odd){
+                padding:10px;max-width: 100cm;
+                text-align:middle;margin-top: 40px;background-color: #99ee99;
+            }
+            #score tr:nth-child(1){
+                background-color: #000000;color: #eeeeee;text-align:center;
+                border-top-left-radius: 10px;border-top-right-radius: 10px;
+            }
+            #score tr:nth-child(even){
+                padding:10px;max-width: 100cm;
+                text-align:middle;margin-top: 40px;background-color: #bbddbb;
+            }
+            .sub{
+                padding: 20px;border: 5px solid;width: 220px; background-color:#a07708;
+                display: inline-block;border-radius: 10px;text-align: start;
+            }
+            #bot{
+                margin-top: 5px;
+            }
+            #bot:hover {
+                color:green;text-decoration: none;
+            }
+
+            #bot:active {
+                color:blue;transform: scale(0.9,0.9);
+            }
+            #back{
+                width: 1000px;
+            }
+            .yren{
+                background-color: #229922;color: #000;
+            }
+            .yren:hover{
+                background-color: #006600;
+            }
+            #user{
+                width: 15%;float: right;text-align: center;
+                padding: 0;height: 10%;
+                z-index: 1;background-color: #cccccc;
+                position: sticky;top: 0px;
+                margin: 0;overflow: visible;
+                padding-bottom: 5%;padding-top: 5%;
+                right: -2px;line-height: 50px;
+                border-radius: 10%;
+            }
+            #menu {
+                list-style-type: none;
+                margin-top: -100px;
+                padding: 0;
+                width: 15%;
+                background-color: #333333;
+                position: fixed;
+                height: 100%;
+                overflow: hidden;z-index: 1;
+            }
+            .menu {
+                position: -webkit-sticky; 
+                position: sticky;
+                top: -2px;
+                z-index: 1;
+            }
+            li a,li div {
+                display: block;
+                color: white;
+                text-align: center;
+                padding:20px 10px;
+                text-decoration: none;
+                width: auto;cursor: pointer;
+            }
+            ul#menu li {
+                float: none;
+            }
+            li.pydrop{
+                display: inline-block;
+            }
+            li a:hover ,li div:hover  {
+                background-color: #111111;color: #4CAF50;
+            }
+            #pycon , #mlcon{
+                display: none;
+                position: absolute ;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 4;overflow: visible;
+            }
+            #pycon a ,#mlcon a{
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;overflow: visible;
+                text-align: left;
+            }
+            #pycon a:hover ,#mlcon a:hover {
+                background-color: #f1f1f1;
+            }
+            .pydropl:hover #pycon ,.mldropl:hover #mlcon{
+                display: block;
+            }
+            #teach{
+                    max-width: 115%;
+            }
+            .hide{
+                display: none;
+            }
+            main{
+                margin: 10px;justify-content: center;text-align: center;
+                margin-left: 15%;{% if not no %}margin-right: 15%;{% endif %}align-items: center;
+                min-height: 800px;
+            }
+            @media screen and (max-width: 1500px){
+                main{
+                    margin-left: 10px;{% if not no %}margin-right: 20%;{% endif %}
+                }
+                #user{
+                    top: 58px;width: 20%;
+                }
+                ul#menu{
+                    width: 100%;height: auto;
+                    position: sticky;
+                    margin: 0;overflow: visible;
+                    padding: 0;min-height: 60px;
+                    top: -2px;
+               }
+                ul#menu li {
+                    float: left;
+                }
+                .home{
+                    font-size: 40px;
+                }
+                .homed{
+                    height: 80px;line-height:80px;
+                }
+            }
+            @media screen and (max-width: 600px){
+                #teach{
+                    max-width: 90%;
+                }
+                main{
+                    width: 90%;text-align: center;margin-left: 10px;
+                }
+                table#score{
+                    max-width: 90%;font-size: 90%;margin-left: 5%;
+                }
+                #score th,#score td{
+                    padding: 15px;
+                }
+                #user{
+                    top: 158px;float: none;border-radius: 0%;
+                    padding-bottom: 5px;width: 100%;padding-top: 0px;
+                }
+                ul#menu{
+                    width: 100%;height: auto;
+                    position: -webkit-sticky; 
+                    position: sticky;
+                    top: -2px;z-index: 2;
+                }
+                ul#menu li {
+                    float: none;
+                }
+                li a,li div{
+                    padding:10px 10px;
+                }
+                .home{
+                    font-size: 40px;
+                }
+                .homed{
+                    height: 80px;line-height:80px;
+                }
+            }
+        </style>
+        <script type="text/javascript">
+            
+            window.onload=function(){
+
+            }
+            function stick(){
+                var st=document.getElementById("menu");
+                var py=document.getElementById("pycon");
+                var ml=document.getElementById("mlcon");
+                st.classList.toggle("menu")
+                if (st.style.position!="sticky"){
+                    st.style.position="sticky"
+                    py.style.position="sticky"
+                    ml.style.position="sticky"
+                }else {
+                    st.style.position="unset"
+                    py.style.position="absolute"
+                    ml.style.position="absolute"
+                }
+            }
+            function close_SBS() {
+                var sbs=document.getElementById("SBS");
+                sbs.classList.toggle("hide");
+            }
+            function get(x){
+                var req=new XMLHttpRequest();
+                req.open("get",x+".html");
+                req.send();
+                req.onload=function(){
+                    py=(this.responseText);
+                    document.getElementById("main").innerHTML=py;
+                }
+            }
+        </script>
+        
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0" />
+            {% if title %}
+            <title>{{ title }} - YiRen_LAB</title>
+            {% else %}
+            <title>Welcome to YiRen_LAB</title>
+            {% endif %}
+    </head>
+    <body style="background-color: #eeeeee;width: 100%;">
+
+        <div class="homed">
+            <a href="/" class="home">倚任</a>
+        </div>
+        <ul class="menu;sidenav" id="menu">
+            <li><a href="https://sites.google.com/site/yirenyeh/home?authuser=0" target="_blank">
+                倚任個人網站</a></li>
+            <li class="pydropl"><a class="pydrop" href="/mypy/">Python程式設計</a>
+                <div id="pycon">
+                    <a href="/">課程</a><a href="/">雙週</a><a href="/mypy/">成績</a>
+                </div>
+            </li>
+            <li class="mldropl"><a class="mldrop" href="/myml/">機器學習</a>
+                <div id="mlcon">
+                    <a href="/myml/">課程</a><a href="/myml/">雙週</a><a href="/myml/">競賽</a>
+                </div>
+            </li>
+            <li><a href="https://hackmd.io/xEXGycMzSjSR0_ojvHFquQ?view" target="_blank">網頁專題實作</a></li>
+        </ul>{% if not no %}
+        <div id="user">
+            
+            {% if userid %}
+            你好，{{name}}<br>
+            <a class="btn" href="/userpro/">個人資料</a>
+            <a class="btn" href="/logout/">登出</a>
+            {% else %}
+            <a class="btn" href="/login/">登入</a>
+            {% endif %}
+            
+        </div>{% endif %}
+        <hr>
+        <main id="main">
+            <div>
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        <hr/>
+        <div style="text-align: center;min-height: 50px;">
+            {{now}}   <a class="bottonbut" href="/admin/">開發人員</a> <a class="bottonbut" href='/teacher/'>Teacher</a>
+        </div>
+    </body>
+</html>

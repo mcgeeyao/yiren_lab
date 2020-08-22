@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>老師登入</h1>
+    <form action="." method="post">{% csrf_token %}
+            <p>
+                {{login_form.as_p}}
+            </p>
+        {% if message %}
+        <p style="color: #ee0000;">{{message}}</p>
+        {% endif %}
+        <br>
+        <input type="submit" value="登入" class="btn"><br>
+    </form>
+
+
+{% endblock %}  
