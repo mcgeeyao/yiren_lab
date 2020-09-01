@@ -293,7 +293,7 @@ def neweek(request):
                 week=Week.objects.get(name=name,nums=num)
                 user=User.objects.all().order_by('id')
                 for u in user:
-                    for n in range(num):
+                    for n in range(int(num)):
                         biweekly.objects.create(week=week,stu=u,num=n+1)
                 return redirect("/teacher/")
 
