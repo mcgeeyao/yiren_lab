@@ -326,13 +326,13 @@ def userpro(request):
     name=request.session['name']
     user=User.objects.get(userid=userid)
     scors=biweekly.objects.filter(stu=user.id).values()
-    weeks=Week.objects.all().order_by('id')
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
     a=0
     for s in scors:
-        a+=s['num1']
-        a+=s['num2']
-        a+=s['num3']
-        a+=s['num4']
+        a+=s['sco']
     return TemplateResponse(request, 'userpro.html', locals())
 
 def mypy(request):
@@ -344,7 +344,10 @@ def mypy(request):
     teamsum=Team.objects.all().aggregate(Count('name'))["name__count"]                    #這是組數
     weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]                    #week數
     teams=Team.objects.all().order_by('id').values()
-    weeks=Week.objects.all().order_by('id')
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
     tol=[]
     members=[]
     tolsum=[]
@@ -370,17 +373,22 @@ def mypy(request):
     for i in range(weeksum):
         tol.append([])
         for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
             tol[i].append([])
+            for k in range(mem):
+                tol[i][j].append([])
 
     for i in range(weeksum):
         for j in range(teamsum):
             locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
             mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
             for k in range(mem):
-                score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
-                tol[i][j].append([score[i]['num1'],score[i]['num2'],score[i]['num3'],score[i]['num4']])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
-                tolsum[j][k]=tolsum[j][k]+sum([score[i]['num1'],score[i]['num2'],score[i]['num3'],score[i]['num4']])
-
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
+                for s in range(weeknums[i]):
+                    tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
+                    tolsum[j][k]=tolsum[j][k]+score[s]['sco']
+  
     if 'userid' in request.session:
         table=[]
         for j in range(len(members)):
@@ -389,7 +397,7 @@ def mypy(request):
                         <td>{members[j][0]}</td>
                         ''')
             for a in range(weeksum):
-                    for b in range(4):
+                    for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][0][b]}</td>')
             table.append(f'<td>{tolsum[j][0]}</td></tr>')
             for i in range(1,len(members[j])):
@@ -397,7 +405,7 @@ def mypy(request):
                 <td>{members[j][i]}</td>
                 ''')
                 for a in range(weeksum):
-                    for b in range(4):
+                    for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][i][b]}</td>')
                 table.append(f'<td>{tolsum[j][i]}</td></tr>')
             
@@ -410,7 +418,7 @@ def mypy(request):
                         <td>{members[j][0]}</td>
                         ''')
             for a in range(weeksum):
-                    for b in range(4):
+                    for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][0][b]}</td>')
             table.append(f'<td>{tolsum[j][0]}</td></tr>')
             for i in range(1,len(members[j])):
@@ -418,7 +426,7 @@ def mypy(request):
                 <td>{members[j][i]}</td>
                 ''')
                 for a in range(weeksum):
-                    for b in range(4):
+                    for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][i][b]}</td>')
                 table.append(f'<td>{tolsum[j][i]}</td></tr>')
             
