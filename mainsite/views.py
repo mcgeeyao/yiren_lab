@@ -337,15 +337,15 @@ def userpro(request):
         score=biweekly.objects.filter(stu=user.id,week=weeks[i]['id']).order_by('num').values()
         for s in range(weeknums[i]):
             tol[i].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
-    a=0
+    aa=0
     for s in scors:
-        a+=s['sco']
+        aa+=s['sco']
     table=[]
     table.append('<tr>')
     for a in range(weeksum):
             for b in range(weeknums[a]):
                 table.append(f'<td>{tol[a][b]}</td>')
-    table.append(f'<td>{a}</td></tr>')
+    table.append(f'<td>{aa}</td></tr>')
     table=''.join(table)
     
     return TemplateResponse(request, 'userpro.html', locals())
