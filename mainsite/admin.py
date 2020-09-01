@@ -7,7 +7,7 @@ class PostAdmin(admin.ModelAdmin):
 class UserAdmin(admin.ModelAdmin):
     list_display =['name','course','userid','password','team']
 class bWeekAdmin(admin.ModelAdmin):
-    list_display =['week','num1','num2','num3','num4','stu']
+    list_display =['week','num','sco','stu']
 
 
 admin.site.register(Post,PostAdmin)

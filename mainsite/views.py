@@ -116,7 +116,10 @@ def teacher(request):
     teamsum=Team.objects.all().aggregate(Count('name'))["name__count"]                    #這是組數
     weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]                    #week數
     teams=Team.objects.all().order_by('id').values()
-    weeks=Week.objects.all().order_by('id')
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
     tol=[]
     members=[]
     tolsum=[]
@@ -137,16 +140,21 @@ def teacher(request):
     for i in range(weeksum):
         tol.append([])
         for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
             tol[i].append([])
+            for k in range(mem):
+                tol[i][j].append([])
 
     for i in range(weeksum):
         for j in range(teamsum):
             locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
             mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
             for k in range(mem):
-                score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
-                tol[i][j].append([score[i]['num1'],score[i]['num2'],score[i]['num3'],score[i]['num4']])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
-                tolsum[j][k]=tolsum[j][k]+sum([score[i]['num1'],score[i]['num2'],score[i]['num3'],score[i]['num4']])
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).values()
+                for s in range(weeknums[i]):
+                    tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
+                    tolsum[j][k]=tolsum[j][k]+score[s]['sco']
 
     table=[]
     for j in range(len(members)):
@@ -163,7 +171,7 @@ def teacher(request):
             <td>{members[j][i]}</td>
             ''')
             for a in range(weeksum):
-                for b in range(4):
+                for b in range(weeknums[a]):
                     table.append(f'<td>{tol[a][j][i][b]}</td>')
             table.append(f'<td>{tolsum[j][i]}</td></tr>')
         
@@ -280,11 +288,13 @@ def neweek(request):
         if form.is_valid():
             try:
                 name=request.POST["name"].strip()
-                Week.objects.create(name=name)
-                week=Week.objects.get(name=name)
+                num=request.POST["num"]
+                Week.objects.create(name=name,nums=num)
+                week=Week.objects.get(name=name,nums=num)
                 user=User.objects.all().order_by('id')
                 for u in user:
-                    biweekly.objects.create(week=week,stu=u)
+                    for n in range(num):
+                        biweekly.objects.create(week=week,stu=u,num=n+1)
                 return redirect("/teacher/")
 
             except:

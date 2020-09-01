@@ -15,7 +15,7 @@ overflow-x: auto;
     <th>組別</th>
 	<th>姓名</th>
     {% for i in weeks %}
-        <th colspan="4">{{i.name}}</th>
+        <th colspan="{{i.nums}}">{{i.name}}</th>
     {% endfor %}
     <th>積分</th>
     </tr>

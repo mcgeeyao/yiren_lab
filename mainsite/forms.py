@@ -12,7 +12,7 @@ class teachlog(forms.Form):
 
 class new_week(forms.Form):
     name=forms.CharField(label='名稱', max_length=20 )
-
+    num=forms.IntegerField(label='題數',max_value=100, min_value=1,initial=4)
 
 class changepsw(forms.Form):
     opsw = forms.CharField(label='舊密碼', widget=forms.PasswordInput())
