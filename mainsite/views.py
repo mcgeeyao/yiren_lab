@@ -304,6 +304,12 @@ def logout(request):
     return TemplateResponse(request, 'index.html', locals())
 
 def userpro(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    else:
+        redirect('/')
     now=datetime.now()
     userid=request.session['userid']
     course=request.session['course']

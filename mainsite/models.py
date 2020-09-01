@@ -45,9 +45,11 @@ class User(models.Model):
         return self.userid
     def __str__(self):
         return self.name
+
 class Week(models.Model):
     name=models.CharField(max_length=20 ,unique=True)
-    
+    nums=models.IntegerField()
+
     def __uncode__(self):
         return self.name
     def __str__(self):
@@ -55,12 +57,12 @@ class Week(models.Model):
 
 class biweekly(models.Model):
     week=models.ForeignKey(Week,on_delete=models.CASCADE)
-    num1=models.FloatField(null=True,default=0.0)
-    num2=models.FloatField(null=True,default=0.0)
-    num3=models.FloatField(null=True,default=0.0)
-    num4=models.FloatField(null=True,default=0.0)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField()
     stu=models.ForeignKey(User,on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['week','num']
 
     def __uncode__(self):
         return self.week.name
