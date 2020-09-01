@@ -151,7 +151,7 @@ def teacher(request):
             locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
             mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
             for k in range(mem):
-                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).values()
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
                 for s in range(weeknums[i]):
                     tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
                     tolsum[j][k]=tolsum[j][k]+score[s]['sco']
@@ -163,7 +163,7 @@ def teacher(request):
                     <td>{members[j][0]}</td>
                     ''')
         for a in range(weeksum):
-                for b in range(4):
+                for b in range(weeknums[a]):
                     table.append(f'<td>{tol[a][j][0][b]}</td>')
         table.append(f'<td>{tolsum[j][0]}</td></tr>')
         for i in range(1,len(members[j])):
