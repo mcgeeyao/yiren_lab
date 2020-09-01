@@ -331,7 +331,6 @@ def userpro(request):
     weeknums=[]
     for w in weeks:
         weeknums.append(w['nums'])
-    weeks=Week.objects.all().order_by('id')
     tol=[]
     for i in range(weeksum):
         tol.append([])
