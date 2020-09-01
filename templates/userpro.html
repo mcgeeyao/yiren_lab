@@ -7,7 +7,7 @@
     <table id='score' style="text-align: center;display: inline-block;">
         <tr>
             {% for i in weeks %}
-                <th colspan="4">{{i.name}}</th>
+                <th colspan="{{i.nums}}">{{i.name}}</th>
             {% endfor %}
             <th>積分</th>
         </tr>

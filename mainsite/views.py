@@ -325,11 +325,19 @@ def userpro(request):
     course=request.session['course']
     name=request.session['name']
     user=User.objects.get(userid=userid)
+    weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]     
     scors=biweekly.objects.filter(stu=user.id).values()
     weeks=Week.objects.all().order_by('id').values()
     weeknums=[]
     for w in weeks:
         weeknums.append(w['nums'])
+    weeks=Week.objects.all().order_by('id')
+    tol=[]
+    for i in range(weeksum):
+        tol.append([])
+        score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
+        for s in range(weeknums[i]):
+            tol[i].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
     a=0
     for s in scors:
         a+=s['sco']
