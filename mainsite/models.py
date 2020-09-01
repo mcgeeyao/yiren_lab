@@ -48,7 +48,7 @@ class User(models.Model):
 
 class Week(models.Model):
     name=models.CharField(max_length=20 ,unique=True)
-    nums=models.IntegerField()
+    nums=models.IntegerField(null=True)
 
     def __uncode__(self):
         return self.name
@@ -58,7 +58,7 @@ class Week(models.Model):
 class biweekly(models.Model):
     week=models.ForeignKey(Week,on_delete=models.CASCADE)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField()
+    num=models.IntegerField(null=True)
     stu=models.ForeignKey(User,on_delete=models.CASCADE)
 
     class Meta:
@@ -71,6 +71,7 @@ class biweekly(models.Model):
 
 class Teacher(models.Model):
     psw=models.CharField(max_length=20,null=False,default='0000')
+    
     def __uncode__(self):
         return self.psw
     def __str__(self):
