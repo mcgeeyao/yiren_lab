@@ -11,16 +11,7 @@
             {% endfor %}
             <th>積分</th>
         </tr>
-        <tr>
-            {% for scor in scors %}
-        
-                <td>{{scor.num1}}</td>
-                <td>{{scor.num2}}</td>
-                <td>{{scor.num3}}</td>
-                <td>{{scor.num4}}</td>
-            {% endfor %}
-            <td>{{a}}</td>
-        </tr>
+        {{table | safe}}
     </table><br>
     <p>
         <a href="/changepsw/" class="btn">更改密碼</a>
