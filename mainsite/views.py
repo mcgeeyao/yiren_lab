@@ -188,10 +188,10 @@ def teacher(request):
         try:
             week=request.POST["week"]
             teamname=request.POST["teamname"]
-            num=request.POST["num"]
+            #num=request.POST["num"]
             team=Team.objects.get(id=teamname).__dict__
             week=Week.objects.get(id=week).__dict__
-            return redirect(f"/scoring/{team['name']}/{week['name']}/{num}")
+            return redirect(f"/scoring/{team['name']}/{week['name']}")
         except:
             message='錯誤'
     else:
@@ -199,6 +199,51 @@ def teacher(request):
 
     return TemplateResponse(request, 'teacher.html', locals())
 
+def scoring(request,team,week):
+    if 'psw' not in request.session:
+        return redirect("/teachlog/")
+    no=request.session['psw']
+    now=datetime.now()
+    if request.method=="POST":
+        try:
+            w=Week.objects.get(name=week).__dict__
+            team=Team.objects.get(name=team).__dict__
+            user=User.objects.filter(team=team['id']).order_by('id')
+            userv=User.objects.filter(team=team['id']).order_by('id').values()
+            for u in range(len(userv)):
+                for n in range(w['nums']):
+                    sco=request.POST["sco"+str(u)+str(n)]
+                    b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id'],num=n+1)
+                    b.update(sco=sco)
+            return redirect('/teacher/')
+        except:
+            message='錯誤,請確認是否輸入為空'
+    else:
+        w=Week.objects.get(name=week).__dict__
+        team=Team.objects.get(name=team).__dict__
+        user=User.objects.filter(team=team['id']).order_by('id')
+        userv=User.objects.filter(team=team['id']).order_by('id').values()
+        orig=[]
+        
+        for u in range(len(userv)):
+            orig.append([])
+            b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id']).order_by('num').values()
+            for s in b:
+                orig[u].append(s['sco'])
+
+        table=[f'<tr><th></th>']
+        for u in range(w['nums']):
+            table.append(f'<th>NO.{u+1}</th>')
+        table.append('</tr>')
+        for u in range(len(userv)):
+            table.append(f'''<tr><td>{userv[u]['name']}</td>''')
+            for n in range(w['nums']):
+                table.append(f'''<td><label for="{"sco"+str(u)+str(n)}"></label><input type="number" step="0.01" value="{orig[u][n]}" name={"sco"+str(u)+str(n)} id={"sco"+str(u)+str(n)}><br></td>''')
+            table.append('</tr><br>')
+            table=''.join(table)
+    return TemplateResponse(request, 'scoring.html', locals())
+
+"""
 def scoring(request,team,week,num):
     if 'psw' not in request.session:
         return redirect("/teachlog/")
@@ -276,7 +321,7 @@ def scoring(request,team,week,num):
                 orig.append(b[0]['num4'])
 
 
-    return TemplateResponse(request, 'scoring.html', locals())
+    return TemplateResponse(request, 'scoring.html', locals())"""
 
 def neweek(request):
     if 'psw' not in request.session:
