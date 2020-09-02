@@ -231,16 +231,17 @@ def scoring(request,team,week):
             for s in b:
                 orig[u].append(s['sco'])
 
-        table=[f'<tr><th></th>']
-        for u in range(w['nums']):
-            table.append(f'<th>NO.{u+1}</th>')
+        table=[]
+        table.append('<tr><th></th>')
+        for n in range(w['nums']):
+            table.append(f'<th>NO.{n+1}</th>')
         table.append('</tr>')
         for u in range(len(userv)):
             table.append(f'''<tr><td>{userv[u]['name']}</td>''')
             for n in range(w['nums']):
                 table.append(f'''<td><label for="{"sco"+str(u)+str(n)}"></label><input type="number" step="0.01" value="{orig[u][n]}" name={"sco"+str(u)+str(n)} id={"sco"+str(u)+str(n)}><br></td>''')
             table.append('</tr><br>')
-            table=''.join(table)
+        table=''.join(table)
     return TemplateResponse(request, 'scoring.html', locals())
 
 """
