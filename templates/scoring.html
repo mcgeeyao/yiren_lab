@@ -9,6 +9,13 @@
     #teach input{
         max-width: 50px;
     }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
 </style>
 <form action="." method="post">{% csrf_token %}
 <table id='teach' style="text-align: center;display: inline-block;
