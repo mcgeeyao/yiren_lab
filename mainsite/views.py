@@ -156,26 +156,26 @@ def teacher(request):
                     tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
                     tolsum[j][k]=tolsum[j][k]+score[s]['sco']
 
-    table=[]
+    table1=[]
     for j in range(len(members)):
-        table.append(f'''<tr>
+        table1.append(f'''<tr>
                     <th rowspan={len(members[j])}>{teams[j]['name']}</th>
                     <td>{members[j][0]}</td>
                     ''')
         for a in range(weeksum):
                 for b in range(weeknums[a]):
-                    table.append(f'<td>{tol[a][j][0][b]}</td>')
-        table.append(f'<td>{tolsum[j][0]}</td></tr>')
+                    table1.append(f'<td>{tol[a][j][0][b]}</td>')
+        table1.append(f'<td>{tolsum[j][0]}</td></tr>')
         for i in range(1,len(members[j])):
-            table.append(f'''<tr>
+            table1.append(f'''<tr>
             <td>{members[j][i]}</td>
             ''')
             for a in range(weeksum):
                 for b in range(weeknums[a]):
-                    table.append(f'<td>{tol[a][j][i][b]}</td>')
-            table.append(f'<td>{tolsum[j][i]}</td></tr>')
+                    table1.append(f'<td>{tol[a][j][i][b]}</td>')
+            table1.append(f'<td>{tolsum[j][i]}</td></tr>')
         
-    table=''.join(table)
+    table1=''.join(table1)
     weekna=[]
     weeks=Week.objects.all().order_by('id').values()
     for w in weeks:
@@ -184,18 +184,64 @@ def teacher(request):
     teams=Team.objects.all().order_by('id').values()
     for t in teams:
         teamna.append((t['id'],t['name']))
-    if request.method=="POST":
+    '''if request.method=="POST":
         try:
             week=request.POST["week"]
             teamname=request.POST["teamname"]
-            #num=request.POST["num"]
             team=Team.objects.get(id=teamname).__dict__
             week=Week.objects.get(id=week).__dict__
             return redirect(f"/scoring/{team['name']}/{week['name']}")
         except:
             message='錯誤'
     else:
-        pass
+        pass'''
+    if request.method=="POST":
+        #try:
+        week=request.POST["week"]
+        teamname=request.POST["teamname"]
+        w=Week.objects.get(id=week).__dict__
+        team=Team.objects.get(id=teamname).__dict__
+        user=User.objects.filter(team=team['id']).order_by('id')
+        userv=User.objects.filter(team=team['id']).order_by('id').values()
+        for u in range(len(userv)):
+            for n in range(w['nums']):
+                sco=request.POST["sco"+str(u)+str(n)]
+                b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id'],num=n+1)
+                b.update(sco=sco)
+        return redirect('/teacher/')
+        #except:
+            #message='錯誤,請確認是否輸入為空'
+    else:
+        table=[]
+        for we in range(len(weeks)):
+            table.append([])
+            for te in range(len(teams)):
+                table[we].append([])
+        for we in range(len(weeks)):
+            for te in range(len(teams)):
+                w=Week.objects.get(name=weeks[we]['name']).__dict__
+                team=Team.objects.get(name=teams[te]['name']).__dict__
+                user=User.objects.filter(team=team['id']).order_by('id')
+                userv=User.objects.filter(team=team['id']).order_by('id').values()
+                orig=[]
+                
+                for u in range(len(userv)):
+                    orig.append([])
+                    b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id']).order_by('num').values()
+                    for s in b:
+                        orig[u].append(s['sco'])
+
+                table[we][te].append('<tr><th></th>')
+                for n in range(w['nums']):
+                    table[we][te].append(f'<th>NO.{n+1}</th>')
+                table[we][te].append('</tr>')
+                for u in range(len(userv)):
+                    table[we][te].append(f'''<tr><td>{userv[u]['name']}</td>''')
+                    for n in range(w['nums']):
+                        table[we][te].append(f'''<td><label for="{"sco"+str(u)+str(n)}"></label><input type="number" step="0.01" value="{orig[u][n]}" name={"sco"+str(u)+str(n)} id={"sco"+str(u)+str(n)}><br></td>''')
+                    table[we][te].append('</tr>')
+                table[we][te]=''.join(table[we][te])
+
 
     return TemplateResponse(request, 'teacher.html', locals())
 
