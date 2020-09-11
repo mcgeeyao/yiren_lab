@@ -196,21 +196,21 @@ def teacher(request):
     else:
         pass'''
     if request.method=="POST":
-        #try:
-        week=request.POST["week"]
-        teamname=request.POST["teamname"]
-        w=Week.objects.get(id=week).__dict__
-        team=Team.objects.get(id=teamname).__dict__
-        user=User.objects.filter(team=team['id']).order_by('id')
-        userv=User.objects.filter(team=team['id']).order_by('id').values()
-        for u in range(len(userv)):
-            for n in range(w['nums']):
-                sco=request.POST["sco"+str(u)+str(n)]
-                b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id'],num=n+1)
-                b.update(sco=sco)
-        return redirect('/teacher/')
-        #except:
-            #message='錯誤,請確認是否輸入為空'
+        try:
+            week=request.POST["week"]
+            teamname=request.POST["teamname"]
+            w=Week.objects.get(id=week).__dict__
+            team=Team.objects.get(id=teamname).__dict__
+            user=User.objects.filter(team=team['id']).order_by('id')
+            userv=User.objects.filter(team=team['id']).order_by('id').values()
+            for u in range(len(userv)):
+                for n in range(w['nums']):
+                    sco=request.POST["sco"+str(u)+str(n)]
+                    b=biweekly.objects.filter(week=w['id'],stu=userv[u]['id'],num=n+1)
+                    b.update(sco=sco)
+            return redirect('/teacher/')
+        except:
+            message='發生錯誤'
     else:
         table=[]
         for we in range(len(weeks)):
