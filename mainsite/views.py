@@ -199,11 +199,74 @@ def teacher(request):
 
     return TemplateResponse(request, 'teacher.html', locals())
 
-def scoring(request,team,week):
+def scoring(request,team=None,week=None):
     if 'psw' not in request.session:
         return redirect("/teachlog/")
     no=request.session['psw']
     now=datetime.now()
+    teamsum=Team.objects.all().aggregate(Count('name'))["name__count"]                    #這是組數
+    weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]                    #week數
+    teams=Team.objects.all().order_by('id').values()
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
+    tol=[]
+    members=[]
+    tolsum=[]
+    sesuser=[]
+    for j in range(teamsum):
+        members.append([])
+        tolsum.append([])
+        sesuser.append([])
+
+    for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
+                members[j].append(locteamuser[k]['name'])                                             #這 members 做出來是(組數，組員name)
+                tolsum[j].append(0)
+
+    for i in range(weeksum):
+        tol.append([])
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            tol[i].append([])
+            for k in range(mem):
+                tol[i][j].append([])
+
+    for i in range(weeksum):
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
+                for s in range(weeknums[i]):
+                    tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
+                    tolsum[j][k]=tolsum[j][k]+score[s]['sco']
+
+    table1=[]
+    for j in range(len(members)):
+        table1.append(f'''<tr>
+                    <th rowspan={len(members[j])}>{teams[j]['name']}</th>
+                    <td>{members[j][0]}</td>
+                    ''')
+        for a in range(weeksum):
+                for b in range(weeknums[a]):
+                    table1.append(f'<td>{tol[a][j][0][b]}</td>')
+        table1.append(f'<td>{tolsum[j][0]}</td></tr>')
+        for i in range(1,len(members[j])):
+            table1.append(f'''<tr>
+            <td>{members[j][i]}</td>
+            ''')
+            for a in range(weeksum):
+                for b in range(weeknums[a]):
+                    table1.append(f'<td>{tol[a][j][i][b]}</td>')
+            table1.append(f'<td>{tolsum[j][i]}</td></tr>')
+        
+    table1=''.join(table1)
     if request.method=="POST":
         try:
             w=Week.objects.get(name=week).__dict__
@@ -329,6 +392,69 @@ def neweek(request):
         return redirect("/teachlog/")
     no=request.session['psw']
     now=datetime.now()
+    teamsum=Team.objects.all().aggregate(Count('name'))["name__count"]                    #這是組數
+    weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]                    #week數
+    teams=Team.objects.all().order_by('id').values()
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
+    tol=[]
+    members=[]
+    tolsum=[]
+    sesuser=[]
+    for j in range(teamsum):
+        members.append([])
+        tolsum.append([])
+        sesuser.append([])
+
+    for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
+                members[j].append(locteamuser[k]['name'])                                             #這 members 做出來是(組數，組員name)
+                tolsum[j].append(0)
+
+    for i in range(weeksum):
+        tol.append([])
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            tol[i].append([])
+            for k in range(mem):
+                tol[i][j].append([])
+
+    for i in range(weeksum):
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id']).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id']).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
+                for s in range(weeknums[i]):
+                    tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
+                    tolsum[j][k]=tolsum[j][k]+score[s]['sco']
+
+    table1=[]
+    for j in range(len(members)):
+        table1.append(f'''<tr>
+                    <th rowspan={len(members[j])}>{teams[j]['name']}</th>
+                    <td>{members[j][0]}</td>
+                    ''')
+        for a in range(weeksum):
+                for b in range(weeknums[a]):
+                    table1.append(f'<td>{tol[a][j][0][b]}</td>')
+        table1.append(f'<td>{tolsum[j][0]}</td></tr>')
+        for i in range(1,len(members[j])):
+            table1.append(f'''<tr>
+            <td>{members[j][i]}</td>
+            ''')
+            for a in range(weeksum):
+                for b in range(weeknums[a]):
+                    table1.append(f'<td>{tol[a][j][i][b]}</td>')
+            table1.append(f'<td>{tolsum[j][i]}</td></tr>')
+        
+    table1=''.join(table1)
     if request.method=="POST":
         form=forms.new_week(request.POST)
         if form.is_valid():

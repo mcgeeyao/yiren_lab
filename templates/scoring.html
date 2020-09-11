@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>打分數</h1>
+
 <style>
     th,td{
         padding: 5px;border: 2px solid #000000;border-collapse: collapse;
@@ -17,6 +17,21 @@
         -moz-appearance: textfield;
     }
 </style>
+<table id='teach' style="text-align: center;display: inline-block;
+border-collapse: collapse;background-color: #ffffff;
+margin: 30px;font-size: small;
+overflow-x: auto;
+" >
+    <tr>
+    <th>組別</th>
+	<th>姓名</th>
+    {% for i in weeks %}
+        <th colspan="{{i.nums}}">{{i.name}}</th>
+    {% endfor %}
+    <th>積分</th>
+    </tr>
+    {{table1 | safe}}
+</table><br><h1>打分數</h1>
 <form action="." method="post">{% csrf_token %}
 <table id='teach' style="text-align: center;display: inline-block;
     border-collapse: collapse;background-color: #ffffff;
