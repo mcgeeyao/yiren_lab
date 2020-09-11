@@ -2,6 +2,16 @@
 
 {% block content %}
 <script>
+    function clear(){
+        var y = document.getElementById("scoring").rows.length;
+        var x = document.getElementById("scoring").rows[0].cells.length;
+        console.log(x,y)
+        for (i=0;i<x-1;i++){
+            for(j=0;j<y-1;j++){
+                document.getElementById('sco'+j+i).value=0;
+            }
+        }
+    }
     function autoscore(){
         var y = document.getElementById("scoring").rows.length;
         var x = document.getElementById("scoring").rows[0].cells.length;
@@ -15,7 +25,7 @@
             }
             for(j=0;j<y-1;j++){
                 if(document.getElementById('sco'+j+i).value==0){
-                    document.getElementById('sco'+j+i).value=((2*to)/3).toFixed(2);  ;
+                    document.getElementById('sco'+j+i).value=((2*to)/3).toFixed(2);
                     
                 }
             }
@@ -92,7 +102,8 @@ overflow-x: auto;
     " >
     </table>
     <br>
-    <a onclick="autoscore()" class="btn">自動填補</a>
+    <input onclick="clear()" class="btn">清空</input>
+    <input onclick="autoscore()" class="btn">自動填補</input>
     <input type="submit" value="確認" class="btn"><br>
 </form><br>
 <a href="/teachlogout/" class="btn">登出</a>
