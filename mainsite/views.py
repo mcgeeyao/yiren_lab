@@ -729,25 +729,23 @@ def searchname(request):
     if 'userid' in request.session:
         table=[]
         for j in range(len(members)):
-            try:
-                table.append(f'''<tr {sesuser[j][0]}>
-                            <th rowspan={len(members[j])}>{teams[j]['name']}</th>
-                            <td>{members[j][0]}</td>
-                            ''')
+            table.append(f'''<tr {sesuser[j][0]}>
+                        <th rowspan={len(members[j])}>{teams[j]['name']}</th>
+                        <td>{members[j][0]}</td>
+                        ''')
+            for a in range(weeksum):
+                    for b in range(weeknums[a]):
+                        table.append(f'<td>{tol[a][j][0][b]}</td>')
+            table.append(f'<td>{tolsum[j][0]}</td></tr>')
+            for i in range(1,len(members[j])):
+                table.append(f'''<tr {sesuser[j][i]}>
+                <td>{members[j][i]}</td>
+                ''')
                 for a in range(weeksum):
-                        for b in range(weeknums[a]):
-                            table.append(f'<td>{tol[a][j][0][b]}</td>')
-                table.append(f'<td>{tolsum[j][0]}</td></tr>')
-                for i in range(1,len(members[j])):
-                    table.append(f'''<tr {sesuser[j][i]}>
-                    <td>{members[j][i]}</td>
-                    ''')
-                    for a in range(weeksum):
-                        for b in range(weeknums[a]):
-                            table.append(f'<td>{tol[a][j][i][b]}</td>')
-                    table.append(f'<td>{tolsum[j][i]}</td></tr>')
-            except:
-                pass
+                    for b in range(weeknums[a]):
+                        table.append(f'<td>{tol[a][j][i][b]}</td>')
+                table.append(f'<td>{tolsum[j][i]}</td></tr>')
+            
         table=''.join(table)
     else:
         table=[]
