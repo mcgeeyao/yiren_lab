@@ -32,4 +32,11 @@ urlpatterns = [
     path('teachlog/',teachlog),
     path('teachlogout/',teachlogout),
     path('changepsw/',changepsw),
+    path('searchname/',searchname),
+
+
+
+    path('test/',test),
+    path('testadd/',testadd),
+
 ]

@@ -3,7 +3,7 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.template import RequestContext
 from django.shortcuts import render,redirect
-from django.http import HttpResponse ,Http404
+from django.http import HttpResponse ,Http404,JsonResponse
 from django.db.models import Count
 from datetime import datetime
 from mainsite import forms
@@ -669,7 +669,112 @@ def mypy(request):
 
     return TemplateResponse(request, 'mypy.html', locals())
 
+def searchname(request):
 
+    search=request.GET.get('v')
+
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    teamsum=Team.objects.all().aggregate(Count('name'))["name__count"]                    #這是組數
+    weeksum=Week.objects.all().aggregate(Count('name'))["name__count"]                    #week數
+    teams=Team.objects.all().order_by('id').values()
+    weeks=Week.objects.all().order_by('id').values()
+    weeknums=[]
+    for w in weeks:
+        weeknums.append(w['nums'])
+    tol=[]
+    members=[]
+    tolsum=[]
+    sesuser=[]
+    for j in range(teamsum):
+        members.append([])
+        tolsum.append([])
+        sesuser.append([])
+
+    for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
+                members[j].append(locteamuser[k]['name'])                                             #這 members 做出來是(組數，組員name)
+                tolsum[j].append(0)
+                if 'userid' in request.session:
+                    if locteamuser[k]['userid']==userid:
+                        sesuser[j].append('style="background-color:#ff5555;"')
+                    else:
+                        sesuser[j].append('')
+
+    for i in range(weeksum):
+        tol.append([])
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            tol[i].append([])
+            for k in range(mem):
+                tol[i][j].append([])
+
+    for i in range(weeksum):
+        for j in range(teamsum):
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            for k in range(mem):
+                score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
+                for s in range(weeknums[i]):
+                    tol[i][j][k].append(score[s]['sco'])          #這 tol 做出來是(週數，組數，組員樹，四題的分數)
+                    tolsum[j][k]=tolsum[j][k]+score[s]['sco']
+  
+    if 'userid' in request.session:
+        table=[]
+        for j in range(len(members)):
+            table.append(f'''<tr {sesuser[j][0]}>
+                        <th rowspan={len(members[j])}>{teams[j]['name']}</th>
+                        <td>{members[j][0]}</td>
+                        ''')
+            for a in range(weeksum):
+                    for b in range(weeknums[a]):
+                        table.append(f'<td>{tol[a][j][0][b]}</td>')
+            table.append(f'<td>{tolsum[j][0]}</td></tr>')
+            for i in range(1,len(members[j])):
+                table.append(f'''<tr {sesuser[j][i]}>
+                <td>{members[j][i]}</td>
+                ''')
+                for a in range(weeksum):
+                    for b in range(weeknums[a]):
+                        table.append(f'<td>{tol[a][j][i][b]}</td>')
+                table.append(f'<td>{tolsum[j][i]}</td></tr>')
+            
+        table=''.join(table)
+    else:
+        table=[]
+        for j in range(len(members)):
+            try:
+                table.append(f'''<tr>
+                            <th rowspan={len(members[j])}>{teams[j]['name']}</th>
+                            <td>{members[j][0]}</td>
+                            ''')
+                for a in range(weeksum):
+                        for b in range(weeknums[a]):
+                            table.append(f'<td>{tol[a][j][0][b]}</td>')
+                table.append(f'<td>{tolsum[j][0]}</td></tr>')
+                for i in range(1,len(members[j])):
+                    table.append(f'''<tr>
+                    <td>{members[j][i]}</td>
+                    ''')
+                    for a in range(weeksum):
+                        for b in range(weeknums[a]):
+                            table.append(f'<td>{tol[a][j][i][b]}</td>')
+                    table.append(f'<td>{tolsum[j][i]}</td></tr>')
+            except:
+                pass
+            
+        table=''.join(table)
+
+
+
+    return JsonResponse({'res': table})
 
 
 def myml(request):
@@ -681,3 +786,10 @@ def myml(request):
     return TemplateResponse(request, 'myml.html', locals())
 
 
+def test(request):
+    now=datetime.now()
+    return TemplateResponse(request, 'test.html', locals())
+def testadd(request):
+    v=request.GET.get('v')
+    now=datetime.now()
+    return JsonResponse({'res':v+'py'})
