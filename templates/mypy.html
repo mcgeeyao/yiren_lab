@@ -5,7 +5,7 @@
     function test(){
         v=document.getElementById('a').value
         var req=new XMLHttpRequest();
-        req.open("get","/searchname/?v=urlencode"+v+")");
+        req.open("get","/searchname/?v=urlencode("+v+")");
         req.send();
         req.onload=function(){
             py=JSON.parse(this.responseText);
