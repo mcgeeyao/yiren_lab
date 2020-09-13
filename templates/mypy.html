@@ -4,8 +4,9 @@
 <script>
     function searchname(){
         v=document.getElementById('sname').value
+        v2=document.getElementById('sid').value
         var req=new XMLHttpRequest();
-        req.open("get","/searchname/?v="+v);
+        req.open("get","/searchname/?v="+v+"/?v2="+v2);
         req.send();
         req.onload=function(){
             py=JSON.parse(this.responseText);
@@ -32,7 +33,7 @@
     }
 
 </script>
-<input onkeyup="searchid();" id="sid" name="sid" placeholder="搜尋學號"/>
+<input onkeyup="searchname();" id="sid" name="sid" placeholder="搜尋學號"/>
 <input onkeyup="searchname();" id="sname" name="sname" placeholder="搜尋姓名"/>
 <br>
 
