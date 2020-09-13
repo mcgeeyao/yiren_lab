@@ -25,11 +25,14 @@ overflow-x: auto;
     <th>積分</th>
     </tr>
     {{table1 | safe}}
-</table><br><h1>新增周次</h1>
+</table><br><h1>刪除周次</h1>
 <form action="." method="post">{% csrf_token %}
-        <p>
-            {{form.as_p}}
-        </p>
+    <label for="week">周次</label>
+    <select id="week" name="week">
+        {% for w in weekna %}
+      <option value="{{w.0}}">{{w.1}}</option>
+        {% endfor %}
+    </select><br>
     {% if message %}
     <p style="color: #ee0000;">{{message}}</p>
     {% endif %}<br>

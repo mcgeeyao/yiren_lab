@@ -28,6 +28,7 @@ urlpatterns = [
     path('mypy/', mypy),
     path('teacher/', teacher),
     path('neweek/', neweek),
+    path('delweek/', delweek),
     path('scoring/<str:team>/<str:week>/',scoring),
     path('teachlog/',teachlog),
     path('teachlogout/',teachlogout),
