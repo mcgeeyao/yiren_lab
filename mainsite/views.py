@@ -786,6 +786,7 @@ def mypy(request):
 def searchname(request):
 
     search=request.GET.get('v')
+    searchid=request.GET.get('v2')
 
     if 'userid' in request.session:
         userid=request.session['userid']
@@ -811,8 +812,8 @@ def searchname(request):
         sesuser.append([])
 
     for j in range(teamsum):
-            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
-            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).aggregate(Count('name'))["name__count"]
             for k in range(mem):
                 score=biweekly.objects.filter(stu=locteamuser[k]['id']).values()
                 memid[j].append(locteamuser[k]['userid'])     
@@ -827,16 +828,16 @@ def searchname(request):
     for i in range(weeksum):
         tol.append([])
         for j in range(teamsum):
-            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
-            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).aggregate(Count('name'))["name__count"]
             tol[i].append([])
             for k in range(mem):
                 tol[i][j].append([])
 
     for i in range(weeksum):
         for j in range(teamsum):
-            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search).order_by('id').values()
-            mem=User.objects.filter(team=teams[j]['id'],name__contains=search).aggregate(Count('name'))["name__count"]
+            locteamuser=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).order_by('id').values()
+            mem=User.objects.filter(team=teams[j]['id'],name__contains=search,userid__contains=searchid).aggregate(Count('name'))["name__count"]
             for k in range(mem):
                 score=biweekly.objects.filter(stu=locteamuser[k]['id'],week=weeks[i]['id']).order_by('num').values()
                 for s in range(weeknums[i]):
