@@ -2,14 +2,28 @@
 
 {% block content %}
 <script>
-    function test(){
+    function searchname(){
         v=document.getElementById('a').value
         var req=new XMLHttpRequest();
         req.open("get","/searchname/?v="+v);
         req.send();
         req.onload=function(){
             py=JSON.parse(this.responseText);
-            document.getElementById("score").innerHTML='<tr><th>組別</th><th>姓名</th>'+
+            document.getElementById("score").innerHTML='<tr><th>組別</th><th>學號</th><th>姓名</th>'+
+    {% for i in weeks %}
+        '<th colspan="{{i.nums}}">{{i.name}}</th>'+
+    {% endfor %}
+    '<th>積分</th></tr>'+py.res;
+        }
+    }
+    function searchid(){
+        v=document.getElementById('a').value
+        var req=new XMLHttpRequest();
+        req.open("get","/searchid/?v="+v);
+        req.send();
+        req.onload=function(){
+            py=JSON.parse(this.responseText);
+            document.getElementById("score").innerHTML='<tr><th>組別</th><th>學號</th><th>姓名</th>'+
     {% for i in weeks %}
         '<th colspan="{{i.nums}}">{{i.name}}</th>'+
     {% endfor %}
@@ -18,12 +32,14 @@
     }
 
 </script>
-<input onkeyup="test();" id="a" name="a" placeholder="搜尋姓名"/>
+<input onkeyup="searchid();" id="a" name="a" placeholder="搜尋學號"/>
+<input onkeyup="searchname();" id="a" name="a" placeholder="搜尋姓名"/>
 <br>
 
 <table id='score' style="text-align: center;display: inline-block;">
     <tr>
     <th>組別</th>
+    <th>學號</th>
 	<th>姓名</th>
     {% for i in weeks %}
         <th colspan="{{i.nums}}">{{i.name}}</th>

@@ -33,7 +33,7 @@ urlpatterns = [
     path('teachlogout/',teachlogout),
     path('changepsw/',changepsw),
     path('searchname/',searchname),
-
+    path('searchid/',searchid),
 
 
     path('test/',test),
