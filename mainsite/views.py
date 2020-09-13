@@ -786,7 +786,11 @@ def mypy(request):
 def searchname(request):
 
     search=request.GET.get('v')
+    if search==None:
+        search=""
     searchid=request.GET.get('v2')
+    if searchid==None:
+        searchid=""
 
     if 'userid' in request.session:
         userid=request.session['userid']

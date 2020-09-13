@@ -6,7 +6,7 @@
         v=document.getElementById('sname').value
         v2=document.getElementById('sid').value
         var req=new XMLHttpRequest();
-        req.open("get","/searchname/?v="+v+"/?v2="+v2);
+        req.open("get","/searchname/?v="+v+"&v2="+v2);
         req.send();
         req.onload=function(){
             py=JSON.parse(this.responseText);
