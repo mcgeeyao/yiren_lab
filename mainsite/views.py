@@ -1039,15 +1039,25 @@ def myml(request):
 
 def chat(request):
     c=request.GET.get('v')
-    chatmes.object.create(text=c)
+    chatmes.objects.create(text=str(c))
+    return JsonResponse({'res': c})
 
 def chatroom(request):
-    chatmess=chatmes.object.all().order_by('id').values()
+    chatmess=chatmes.objects.all().order_by('id').values()
     html=''
     for i in chatmess:
         html+=f"<p>{i['text']}</p><br>"
 
     return JsonResponse({'res': html})
+
+def chatsite(request):
+    now=datetime.now()
+
+    return TemplateResponse(request, 'chat.html', locals())
+def clearchat(request):
+    chatmess=chatmes.objects.all()
+    for c in chatmess:
+        c.delete()
 
 def test(request):
     now=datetime.now()
