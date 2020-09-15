@@ -1058,6 +1058,7 @@ def clearchat(request):
     chatmess=chatmes.objects.all()
     for c in chatmess:
         c.delete()
+    return redirect('/chatsite/')
 
 def test(request):
     now=datetime.now()

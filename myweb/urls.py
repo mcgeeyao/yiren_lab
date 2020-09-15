@@ -38,6 +38,7 @@ urlpatterns = [
     path('chatsite/',chatsite),
     path('chat/',chat),
     path('chatroom/',chatroom),
+    path('clearchat/',clearchat),
 
     path('test/',test),
     path('testadd/',testadd),

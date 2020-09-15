@@ -7,7 +7,7 @@
         line-height: 0px;font-size: small;
         width: 30%;margin-left:auto;margin-right:auto;
         text-align: left;padding-left: 5px;
-        max-height: 200px;overflow-y:auto;
+        height: 200px;overflow-y:auto;
     }
 </style>
 <script>
@@ -20,17 +20,21 @@
         setTimeout(function(){
             var objDiv = document.getElementById("chatbox");
         objDiv.scrollTop = objDiv.scrollHeight;
-        },500)
+        },300)
         
     }
     window.onload = function(){
         var req2=new XMLHttpRequest();
-            req2.open("get","/chatroom/");
-            req2.send();
-            req2.onload=function(){
-            py=JSON.parse(this.responseText);
-            document.getElementById('chatbox').innerHTML=py.res
-            }    
+        req2.open("get","/chatroom/");
+        req2.send();
+        req2.onload=function(){
+        py=JSON.parse(this.responseText);
+        document.getElementById('chatbox').innerHTML=py.res
+        }    
+        setTimeout(function(){
+            var objDiv = document.getElementById("chatbox");
+        objDiv.scrollTop = objDiv.scrollHeight;
+        },10)
         setInterval(function(){ 
             var req2=new XMLHttpRequest();
             req2.open("get","/chatroom/");
@@ -46,7 +50,7 @@
 <div id="chatbox" ></div>
 <br>
 
-<input type="text" id="input" name="input" onchange="chat();" class="btn" placeholder="輸入訊息"><br>
+<input type="text" id="input" name="input" onchange="chat();" class="btn" placeholder="輸入訊息"><br><br>
 <a href="/clearchat/" class="btn">清除記錄</a>
 
 {% endblock %}  
