@@ -35,7 +35,7 @@ urlpatterns = [
     path('changepsw/',changepsw),
     path('searchname/',searchname),
     path('searchid/',searchid),
-
+    path('chat/',chat),
 
     path('test/',test),
     path('testadd/',testadd),

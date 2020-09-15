@@ -3,8 +3,8 @@
 {% block content %}
 <script>
     function searchname(){
-        v=document.getElementById('sname').value
-        v2=document.getElementById('sid').value
+        v=document.getElementById('sname').value;
+        v2=document.getElementById('sid').value;
         var req=new XMLHttpRequest();
         req.open("get","/searchname/?v="+v+"&v2="+v2);
         req.send();

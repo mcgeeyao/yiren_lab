@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script>
+    function searchname(){
+        v=document.getElementById('input').value;
+        document.getElementById('input').value='';
+        var req=new XMLHttpRequest();
+        req.open("get","/chat/?v="+v);
+        req.send();
+    }
+    window.onload = function(){
+        
+        setInterval(function(){ 
+            var req2=new XMLHttpRequest();
+            req2.open("get","/chatroom/");
+            req2.send();
+            req2.onload=function(){
+            py=JSON.parse(this.responseText);
+            document.getElementById('box').value=py.res
+            }          
+        }, 100);
+     }
+</script>
+<h1>聊天</h1>
+<div id="box" ></div>
+<input type="text" id="input" name="input" onchange="chat();" class="btn"><br>
+
+
+{% endblock %}  

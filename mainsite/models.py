@@ -76,3 +76,10 @@ class Teacher(models.Model):
         return self.psw
     def __str__(self):
         return self.psw
+
+class chatmes(models.Model):
+    text=models.CharField(max_length=500,null=False)
+    def __uncode__(self):
+        return self.text
+    def __str__(self):
+        return self.text

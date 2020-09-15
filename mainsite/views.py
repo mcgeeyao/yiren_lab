@@ -1037,6 +1037,17 @@ def myml(request):
     now=datetime.now()
     return TemplateResponse(request, 'myml.html', locals())
 
+def chat(request):
+    c=request.GET.get('v')
+    chatmes.object.create(text=c)
+
+def chatroom(request):
+    chatmess=chatmes.object.all().order_by('id').values()
+    html=''
+    for i in chatmess:
+        html+=f"<p>{i['text']}</p><br>"
+
+    return JsonResponse({'res': html})
 
 def test(request):
     now=datetime.now()
