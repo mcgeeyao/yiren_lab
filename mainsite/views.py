@@ -900,8 +900,14 @@ def searchname(request):
                 pass
             
         table=''.join(table)
-
-
+    res=0
+    for j in range(len(members)):
+        res+=len(members[j])
+    wee=0
+    for w in weeks:
+        wee+=w['nums']
+    if res==0:
+        table=f'''<tr><td colspan="{wee+4}">查無資料</td></tr>'''
 
     return JsonResponse({'res': table})
 
