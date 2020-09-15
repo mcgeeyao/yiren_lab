@@ -1046,7 +1046,7 @@ def chatroom(request):
     chatmess=chatmes.objects.all().order_by('id').values()
     html=''
     for i in chatmess:
-        html+=f"<p>{i['text']}</p><br>"
+        html+=f"<div>{i['text']}</div><br>"
 
     return JsonResponse({'res': html})
 
