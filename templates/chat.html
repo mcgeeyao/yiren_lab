@@ -17,12 +17,6 @@
         var req=new XMLHttpRequest();
         req.open("get","/chat/?v="+v);
         req.send();
-        req2.onload=function(){
-            setTimeout(function(){
-                var objDiv = document.getElementById("chatbox");
-                objDiv.scrollTop = objDiv.scrollHeight;
-            },800)
-        }
     }
     window.onload = function(){
         var req2=new XMLHttpRequest();
@@ -44,6 +38,8 @@
             req2.onload=function(){
                 py=JSON.parse(this.responseText);
                 document.getElementById('chatbox').innerHTML=py.res
+                var objDiv = document.getElementById("chatbox");
+                objDiv.scrollTop = objDiv.scrollHeight;
             }          
         }, 100);
      }
