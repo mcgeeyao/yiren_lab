@@ -1,9 +1,9 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
-
+'''
 def connect(self):
     self.user = self.scope["user"]
-
+'''
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
