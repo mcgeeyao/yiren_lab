@@ -42,12 +42,12 @@ INSTALLED_APPS = [
 ]
 
 ASGI_APPLICATION = 'myweb.routing.application'
-'''
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            'hosts': [('127.0.0.1', 6379)],
+            'hosts': [(os.environ.get('REDIS_HOST', 'localhost'), 6379)],
         },
     },
 }
@@ -57,7 +57,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-
+'''
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
