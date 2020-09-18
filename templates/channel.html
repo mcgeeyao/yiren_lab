@@ -7,7 +7,7 @@
   <script>
     
     var chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/');
+        'wss://' + window.location.host + '/ws/chat/');
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
