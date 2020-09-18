@@ -47,7 +47,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            'hosts': [('yiren-lab.herokuapp.com')],
+            'hosts': [('yiren-lab.herokuapp.com',6379)],
         },
     },
 }
