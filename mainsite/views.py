@@ -1067,3 +1067,8 @@ def testadd(request):
     v=request.GET.get('v')
     now=datetime.now()
     return JsonResponse({'res':v+'py'})
+
+
+
+def chat2(request):
+    return TemplateResponse(request, 'channel.html')

@@ -42,5 +42,5 @@ urlpatterns = [
 
     path('test/',test),
     path('testadd/',testadd),
-
+    path('chat2/', chat2)
 ]
