@@ -4,11 +4,14 @@ from channels.security.websocket import OriginValidator,AllowedHostsOriginValida
 import mainsite.routing
 
 application = ProtocolTypeRouter({
-    'websocket': AllowedHostsOriginValidator(AuthMiddlewareStack(
-        URLRouter(
-            mainsite.routing.websocket_urlpatterns
+    'websocket': AllowedHostsOriginValidator(
+        AuthMiddlewareStack(
+        
+            URLRouter(
+                mainsite.routing.websocket_urlpatterns
+            )
         )
-    )),
+    ),
 })
 
 
