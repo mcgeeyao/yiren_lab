@@ -5,7 +5,7 @@
   <input class="form-control" id="chat-message-input" type="text"/><br/>
   <input class="btn btn-success btn-block" id="chat-message-submit" type="button" value="Send"/>
   <script>
-    console.log(window.location)
+    console.log(window.location.pathname)
     var chatSocket = new WebSocket(
         'wss://' + window.location.host + '/ws/chat/');
 

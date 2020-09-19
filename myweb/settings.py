@@ -47,7 +47,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            'hosts': [('localhost',6397)],
+            'hosts': [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
     },
 }
@@ -85,9 +85,9 @@ TEMPLATES = [
         },
     },
 ]
-'''
+
 WSGI_APPLICATION = 'myweb.wsgi.application'
-'''
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
