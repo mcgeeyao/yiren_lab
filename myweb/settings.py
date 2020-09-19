@@ -47,7 +47,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            'hosts': [('yiren-lab',6397)],
+            'hosts': [('REDIS_HOSTS',6397)],
         },
     },
 }
