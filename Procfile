@@ -1,1 +1,1 @@
-web: daphne myweb.asgi:channel_layer --port $PORT --bind 0.0.0.0
+web: gunicorn --pythonpath myweb myweb.wsgi
