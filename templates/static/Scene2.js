@@ -17,32 +17,6 @@ class Scene2 extends Phaser.Scene {
         setInterval(()=>{
             this.ship2.angle+=3;
         },30);
-
-        this.anims.create({
-            key: "ship1_anim",
-            frames: this.anims.generateFrameNumbers("ship"),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key:"ship2_anim",
-            frames:this.anims.generateFrameNumbers("ship2"),
-            frameRate:20,
-            repeat:-1
-        });
-        this.anims.create({
-            key:"ship3_anim",
-            frames:this.anims.generateFrameNumbers("ship3"),
-            frameRate:20,
-            repeat:-1
-        });
-        this.anims.create({
-            key:"explode",
-            frames:this.anims.generateFrameNumbers("explosion"),
-            frameRate:20,
-            repeat:0,
-            hideOnComplete:true
-        });
         
         this.ship1.play("ship1_anim",true);
         this.ship2.play("ship2_anim",true);
@@ -55,25 +29,8 @@ class Scene2 extends Phaser.Scene {
         this.input.on('gameobjectdown', this.destroyShip, this);
 
         this.add.text(20,20,"Playing",{font:'25px Arial',fill:'#33ff33'});
-    
-        this.anims.create({
-            key: "red",
-            frames: this.anims.generateFrameNumbers("power-up", {
-                start: 0,
-                end: 1
-            }),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "gray",
-            frames: this.anims.generateFrameNumbers("power-up", {
-                start: 2,
-                end: 3
-            }),
-            frameRate: 20,
-            repeat: -1
-        });
+        
+        this.physics.world.setBoundsCollision();
         this.powerUps = this.physics.add.group();
         var maxObjects = 4;
         for (var i = 0; i <= maxObjects; i++) {
@@ -88,9 +45,11 @@ class Scene2 extends Phaser.Scene {
             }
             powerUp.setVelocity(100, 100);
             powerUp.setCollideWorldBounds(true);
-            powerUp.setBounce(10);
-
+            powerUp.setBounce(1);
         }
+        
+        this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+        this.player.play("thrust");
     }
     moveShip(ship,speed){
         ship.y+=speed
