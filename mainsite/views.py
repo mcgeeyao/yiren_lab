@@ -1072,3 +1072,6 @@ def testadd(request):
 
 def chat2(request):
     return TemplateResponse(request, 'channel.html')
+
+def game(request):
+    return TemplateResponse(request, 'phaser.html')
