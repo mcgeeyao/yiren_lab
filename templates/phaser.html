@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block content %}
-{% load static %}
-<script type="text/javascrip" src="{% static 'game.js' %}"></script>
-<script type="text/javascrip" src="{% static 'phaser.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'phaser.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Scene1.js' %}"></script>
+<script type="text/javascript" src="{% static 'Scene2.js' %}"></script>
+<script type="text/javascript" src="{% static 'game.js' %}"></script>
+<div id='myphaser'></div>
+
 {% endblock %}  
