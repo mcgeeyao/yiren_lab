@@ -80,6 +80,16 @@ class Scene2 extends Phaser.Scene {
             var powerUp = this.physics.add.sprite(16, 16, "power-up");
             this.powerUps.add(powerUp);
             powerUp.setRandomPosition(0, 0, config.width, config.height);
+            
+            if (Math.random() > 0.5) {
+                powerUp.play("red");
+            } else {
+                powerUp.play("gray");
+            }
+            powerUp.setVelocity(100, 100);
+            powerUp.setCollideWorldBounds(true);
+            powerUp.setBounce(10);
+
         }
     }
     moveShip(ship,speed){
