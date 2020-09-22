@@ -1,4 +1,8 @@
-
+var gameSettings = {
+    playerSpeed: 200,
+    maxPowerups: 2,
+    powerUpVel: 50,
+}
 var config = {
     type: Phaser.AUTO,
     width: 512,
