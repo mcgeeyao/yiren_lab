@@ -84,12 +84,27 @@ class Scene2 extends Phaser.Scene {
     }
     hurtPlayer(player, enemy) {
         this.resetShipPos(enemy);
-        player.x = config.width / 2 - 8;
-        player.y = config.height - 64;
+        if(this.player.alpha < 1){
+            return;
+        }
+    
+        var explosion = new Explosion(this, player.x, player.y);
+    
+        player.disableBody(true, true);
+    
+        this.time.addEvent({
+          delay: 1000,
+          callback: this.resetPlayer,
+          callbackScope: this,
+          loop: false
+        });
     }
     
       // 4.3 reset ship position when hit
     hitEnemy(projectile, enemy) {
+
+        var explosion = new Explosion(this, enemy.x, enemy.y);
+
         projectile.destroy();
         this.resetShipPos(enemy);
         this.score += 15;
@@ -117,6 +132,25 @@ class Scene2 extends Phaser.Scene {
         ship.y=0;
         var randomX=Phaser.Math.Between(0,config.width)
         ship.x=randomX
+    }
+    resetPlayer(){
+        var x = config.width / 2 - 8;
+        var y = config.height + 64;
+        this.player.enableBody(true, x, y, true, true);
+    
+        this.player.alpha = 0.5;
+        
+        var tween = this.tweens.add({
+          targets: this.player,
+          y: config.height - 64,
+          ease: 'Power1',
+          duration: 1500,
+          repeat:0,
+          onComplete: function(){
+            this.player.alpha = 1;
+          },
+          callbackScope: this
+        });
     }
     destroyShip(pointer, gameObject) {
         gameObject.setTexture("explosion");
