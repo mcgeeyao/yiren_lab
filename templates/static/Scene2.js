@@ -79,7 +79,7 @@ class Scene2 extends Phaser.Scene {
         
         this.score = 0;
         var scoreFormated = this.zeroPad(this.score, 6);
-        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE " + scoreFormated  , 32);
+        this.scoreLabel = this.add.bitmapText(20, 10, "pixelFont", "SCORE " + scoreFormated  , 32);
     
     }
     hurtPlayer(player, enemy) {
