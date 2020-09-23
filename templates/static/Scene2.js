@@ -58,7 +58,13 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
             projectile.destroy();
         });
+        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
 
+
+    }
+    pickPowerUp(player, powerUp) {
+        // make it inactive and hide it
+        powerUp.disableBody(true, true);
     }
     moveShip(ship,speed){
         ship.y+=speed
