@@ -65,8 +65,22 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
         this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
-
-
+        
+        var graphics = this.add.graphics();
+        graphics.fillStyle(0x000000, 1);
+        graphics.beginPath();
+        graphics.moveTo(0, 0);
+        graphics.lineTo(config.width, 0);
+        graphics.lineTo(config.width, 20);
+        graphics.lineTo(0, 20);
+        graphics.lineTo(0, 0);
+        graphics.closePath();
+        graphics.fillPath();
+        
+        this.score = 0;
+        var scoreFormated = this.zeroPad(this.score, 6);
+        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE " + scoreFormated  , 16);
+    
     }
     hurtPlayer(player, enemy) {
         this.resetShipPos(enemy);
@@ -77,8 +91,10 @@ class Scene2 extends Phaser.Scene {
       // 4.3 reset ship position when hit
     hitEnemy(projectile, enemy) {
         projectile.destroy();
-        this.destroyShip;
         this.resetShipPos(enemy);
+        this.score += 15;
+        var scoreFormated = this.zeroPad(this.score, 6);
+        this.scoreLabel.text = "SCORE " + scoreFormated;
     }
     pickPowerUp(player, powerUp) {
         // make it inactive and hide it
