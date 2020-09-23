@@ -21,3 +21,8 @@ traitlets==4.0.0
 channels==2.4.0
 channels-redis==3.1.0
 django-redis-cache==2.1.1
+enum-compat==0.0.2
+eventlet==0.27.0
+python-engineio
+python-socketio
+six==1.15.0

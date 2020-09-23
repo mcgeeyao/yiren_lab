@@ -55,6 +55,9 @@ class Scene2 extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.projectiles=this.add.group();
+        this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+            projectile.destroy();
+        });
 
     }
     moveShip(ship,speed){
