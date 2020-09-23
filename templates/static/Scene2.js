@@ -77,7 +77,7 @@ class Scene2 extends Phaser.Scene {
       // 4.3 reset ship position when hit
     hitEnemy(projectile, enemy) {
         projectile.destroy();
-        enemy.destroyShip();
+        this.destroyShip();
         this.resetShipPos(enemy);
     }
     pickPowerUp(player, powerUp) {
