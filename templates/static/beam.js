@@ -10,7 +10,7 @@ class Beam extends Phaser.GameObjects.Sprite{
 
     // 3.2 add to scene
     scene.add.existing(this);
-
+    this.setScale(2);
     // 3.3
     this.play("beam_anim");
     scene.physics.world.enableBody(this);
