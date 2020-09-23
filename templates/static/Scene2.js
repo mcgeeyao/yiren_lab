@@ -121,6 +121,7 @@ class Scene2 extends Phaser.Scene {
     destroyShip(pointer, gameObject) {
         gameObject.setTexture("explosion");
         gameObject.play("explode");
+        gameObject.resetShipPos();
     }
     movePlayerManager(){
 
