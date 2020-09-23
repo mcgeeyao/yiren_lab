@@ -14,10 +14,14 @@ class Scene2 extends Phaser.Scene {
         this.ship1.setScale(2);
         this.ship1.setScale(2);
         this.ship1.setScale(2);
-        setInterval(()=>{
-            this.ship2.angle+=3;
-        },30);
-        
+        //setInterval(()=>{
+        //    this.ship2.angle+=3;
+        //},30);
+        this.enemies = this.physics.add.group();
+        this.enemies.add(this.ship1);
+        this.enemies.add(this.ship2);
+        this.enemies.add(this.ship3);
+
         this.ship1.play("ship1_anim",true);
         this.ship2.play("ship2_anim",true);
         this.ship3.play("ship3_anim",true);
@@ -59,8 +63,21 @@ class Scene2 extends Phaser.Scene {
             projectile.destroy();
         });
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+        this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
 
+    }
+    hurtPlayer(player, enemy) {
+        this.resetShipPos(enemy);
+        player.x = config.width / 2 - 8;
+        player.y = config.height - 64;
+    }
+    
+      // 4.3 reset ship position when hit
+    hitEnemy(projectile, enemy) {
+        projectile.destroy();
+        this.resetShipPos(enemy);
     }
     pickPowerUp(player, powerUp) {
         // make it inactive and hide it
