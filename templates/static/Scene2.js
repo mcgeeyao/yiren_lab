@@ -106,6 +106,13 @@ class Scene2 extends Phaser.Scene {
             this.resetShipPos(ship);
         }
     }
+    zeroPad(number, size){
+        var stringNumber = String(number);
+        while(stringNumber.length < (size || 2)){
+          stringNumber = "0" + stringNumber;
+        }
+        return stringNumber;
+    }
     resetShipPos(ship){
         ship.y=0;
         var randomX=Phaser.Math.Between(0,config.width)
