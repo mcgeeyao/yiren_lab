@@ -144,7 +144,7 @@ class Scene2 extends Phaser.Scene {
           targets: this.player,
           y: config.height - 64,
           ease: 'Power1',
-          duration: 1500,
+          duration: 3000,
           repeat:0,
           onComplete: function(){
             this.player.alpha = 1;
@@ -183,7 +183,9 @@ class Scene2 extends Phaser.Scene {
         this.background.tilePositionY-=0.5;
         this.movePlayerManager();
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
-            this.shootBeam();
+            if(this.player.active){
+                this.shootBeam();
+            }
         }
         for(var i = 0; i < this.projectiles.getChildren().length; i++){
             var beam = this.projectiles.getChildren()[i];
