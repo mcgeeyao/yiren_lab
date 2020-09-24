@@ -142,7 +142,7 @@ class Scene2 extends Phaser.Scene {
         
         var tween = this.tweens.add({
           targets: this.player,
-          y: config.height - 64,
+          y: config.height - 100,
           ease: 'Power1',
           duration: 3000,
           repeat:0,
