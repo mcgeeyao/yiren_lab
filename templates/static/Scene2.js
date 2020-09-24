@@ -32,7 +32,7 @@ class Scene2 extends Phaser.Scene {
 
         this.input.on('gameobjectdown', this.destroyShip, this);
 
-        //this.add.text(20,20,"Playing",{font:'25px Arial',fill:'#33ff33'});
+        this.add.text(20,50,"press space to shoot",{font:'15px Arial',fill:'#33ff33'});
         
         this.physics.world.setBoundsCollision();
         this.powerUps = this.physics.add.group();
@@ -80,7 +80,7 @@ class Scene2 extends Phaser.Scene {
         this.score = 0;
         var scoreFormated = this.zeroPad(this.score, 6);
         this.scoreLabel = this.add.bitmapText(20, 10, "pixelFont", "SCORE " + scoreFormated  , 32);
-    
+        
     }
     hurtPlayer(player, enemy) {
         this.resetShipPos(enemy);
