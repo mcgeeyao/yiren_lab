@@ -9,6 +9,8 @@ class UserAdmin(admin.ModelAdmin):
 class bWeekAdmin(admin.ModelAdmin):
     list_display =['week','num','sco','stu']
 
+class geekAdmin(admin.ModelAdmin):
+    list_display =['file']
 
 admin.site.register(Post,PostAdmin)
 admin.site.register(User,UserAdmin)
@@ -17,3 +19,5 @@ admin.site.register(Team)
 admin.site.register(Week)
 admin.site.register(Teacher)
 admin.site.register(chatmes)
+
+admin.site.register(kagglefile)

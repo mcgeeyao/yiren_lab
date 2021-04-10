@@ -17,6 +17,7 @@ class Post(models.Model):
 
 class Team(models.Model):
     name=models.CharField(max_length=20,null=False)
+    test_t=models.IntegerField(default=0)
 
     class Meta:
         ordering = ['name']
@@ -76,6 +77,91 @@ class Teacher(models.Model):
         return self.psw
     def __str__(self):
         return self.psw
+
+
+
+class kagglefile(models.Model):
+    kaggle_field = models.FileField()
+
+class kagscore(models.Model):
+    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField(null=True)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['num']
+
+    def __uncode__(self):
+        return self.team
+    def __str__(self):
+        return self.team
+
+class kagscore1(models.Model):
+    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField(null=True)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['num']
+
+    def __uncode__(self):
+        return self.team
+    def __str__(self):
+        return self.team
+
+class kagscore2(models.Model):
+    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField(null=True)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['num']
+
+    def __uncode__(self):
+        return self.team
+    def __str__(self):
+        return self.team
+
+class kagscore3(models.Model):
+    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField(null=True)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['num']
+
+    def __uncode__(self):
+        return self.team
+    def __str__(self):
+        return self.team
+
+class kagscore4(models.Model):
+    week=models.ForeignKey(Week,on_delete=models.CASCADE)
+    sco=models.FloatField(null=True,default=0.0)
+    num=models.IntegerField(null=True)
+    team=models.ForeignKey(Team,on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['num']
+
+    def __uncode__(self):
+        return self.team
+    def __str__(self):
+        return self.team
+
+
+
+
+
+
+
+
+
+
 
 class chatmes(models.Model):
     text=models.CharField(max_length=500,null=False)

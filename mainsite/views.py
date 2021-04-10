@@ -9,6 +9,12 @@ from datetime import datetime
 from mainsite import forms
 from .models import *
 
+import os
+import sklearn
+import pandas as pd
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
+
 # Create your views here.
 def index(request):
     posts=Post.objects.all()
@@ -34,6 +40,7 @@ def login(request):
                     request.session['userid']=user.userid
                     request.session['course']=user.course
                     request.session['name']=user.name
+                    request.session['team']=user.team.name
                     return redirect("/")
                 else:
                     message="學號或密碼錯誤"
@@ -709,7 +716,7 @@ def mypy(request):
                 tolsum[j].append(0)
                 if 'userid' in request.session:
                     if locteamuser[k]['userid']==userid:
-                        sesuser[j].append('style="background-color:#ff5555;"')
+                        sesuser[j].append('style="background-color:#ff8888;"')
                     else:
                         sesuser[j].append('')
 
@@ -1036,6 +1043,58 @@ def myml(request):
         name=request.session['name']
     now=datetime.now()
     return TemplateResponse(request, 'myml.html', locals())
+
+
+def kaggle(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+    shape=y.shape
+    return TemplateResponse(request, 'kaggle.html', locals())
+
+def kaggle1(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+    shape=y.shape
+    return TemplateResponse(request, 'kaggle1.html', locals())
+
+def kaggle2(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+    shape=y.shape
+    return TemplateResponse(request, 'kaggle2.html', locals())
+
+def kaggle3(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+    shape=y.shape
+    return TemplateResponse(request, 'kaggle3.html', locals())
+
+def kaggle4(request):
+    if 'userid' in request.session:
+        userid=request.session['userid']
+        course=request.session['course']
+        name=request.session['name']
+    now=datetime.now()
+    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+    shape=y.shape
+    return TemplateResponse(request, 'kaggle4.html', locals())
+
 
 def chat(request):
     c=request.GET.get('v')

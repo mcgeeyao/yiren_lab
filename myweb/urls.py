@@ -38,6 +38,13 @@ urlpatterns = [
     path('changepsw/',changepsw),
     path('searchname/',searchname),
     path('searchid/',searchid),
+
+    path('kaggle/',kaggle),
+    path('kaggle1/',kaggle1),
+    path('kaggle2/',kaggle2),
+    path('kaggle3/',kaggle3),
+    path('kaggle4/',kaggle4),
+
     path('chatsite/',chatsite),
     path('chat/',chat),
     path('chatroom/',chatroom),
