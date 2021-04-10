@@ -26,5 +26,5 @@ eventlet==0.27.0
 python-engineio
 python-socketio
 six==1.15.0
-pandas==1.2.3
+pandas==1.1.5
 scikit-learn==0.24.1
