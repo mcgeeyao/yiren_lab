@@ -9,8 +9,6 @@ class UserAdmin(admin.ModelAdmin):
 class bWeekAdmin(admin.ModelAdmin):
     list_display =['week','num','sco','stu']
 
-class geekAdmin(admin.ModelAdmin):
-    list_display =['file']
 
 admin.site.register(Post,PostAdmin)
 admin.site.register(User,UserAdmin)

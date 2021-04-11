@@ -17,7 +17,7 @@ class Post(models.Model):
 
 class Team(models.Model):
     name=models.CharField(max_length=20,null=False)
-    test_t=models.IntegerField(default=0)
+    test_t=models.IntegerField(default=0,null=True)
 
     class Meta:
         ordering = ['name']
@@ -81,7 +81,7 @@ class Teacher(models.Model):
 
 
 class kagglefile(models.Model):
-    kaggle_field = models.FileField()
+    kaggle_field = models.FileField(null=True)
 
 class kagscore(models.Model):
     date=models.ForeignKey(Week,on_delete=models.CASCADE)
