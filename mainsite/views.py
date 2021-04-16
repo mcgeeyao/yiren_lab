@@ -1092,7 +1092,7 @@ def kaggle(request):
         team_score_list=[]
         for j in team_score:
             team_score_list.append(j.sco)
-        record=max(team_score_list)
+        #record=max(team_score_list)
     
     #各組上傳紀錄表
     if 'userid' in request.session:
