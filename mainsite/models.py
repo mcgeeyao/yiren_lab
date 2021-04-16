@@ -88,7 +88,7 @@ class kagglefile(models.Model):
     kaggle_field = models.FileField(null=True)
 
 class kagscore(models.Model):
-    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
@@ -101,7 +101,7 @@ class kagscore(models.Model):
         return self.team.name
 
 class kagscore1(models.Model):
-    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
@@ -114,7 +114,7 @@ class kagscore1(models.Model):
         return self.team.name
 
 class kagscore2(models.Model):
-    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
@@ -127,7 +127,7 @@ class kagscore2(models.Model):
         return self.team.name
 
 class kagscore3(models.Model):
-    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
@@ -140,7 +140,7 @@ class kagscore3(models.Model):
         return self.team.name
 
 class kagscore4(models.Model):
-    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 

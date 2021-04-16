@@ -1081,9 +1081,9 @@ def kaggle(request):
                         message='格式錯誤'
                 except:
                     message='請選擇檔案'
+            times=str(times)
         else:
             message='請先登入'
-    times=str(times)
     #排名表
     all_team=Team.objects.all()
     
