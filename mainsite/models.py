@@ -86,7 +86,7 @@ class Teacher(models.Model):
 
 class kagglefile(models.Model):
     kaggle_field = models.FileField(null=True)
-
+'''
 class kagscore(models.Model):
     date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
@@ -99,7 +99,7 @@ class kagscore(models.Model):
         return self.team.name
     def __str__(self):
         return self.team.name
-
+'''
 class kagscore1(models.Model):
     date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)

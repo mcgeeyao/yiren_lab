@@ -19,7 +19,7 @@ admin.site.register(Teacher)
 admin.site.register(chatmes)
 
 admin.site.register(kagglefile)
-admin.site.register(kagscore)
+#admin.site.register(kagscore)
 admin.site.register(kagscore1)
 admin.site.register(kagscore2)
 admin.site.register(kagscore3)
