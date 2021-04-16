@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 # Create your models here.
-
+'''
 class Post(models.Model):
     title=models.CharField(max_length=200)
     slug=models.CharField(max_length=200)
@@ -86,7 +86,7 @@ class Teacher(models.Model):
 
 class kagglefile(models.Model):
     kaggle_field = models.FileField(null=True)
-'''
+
 class kagscore(models.Model):
     date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
@@ -99,7 +99,7 @@ class kagscore(models.Model):
         return self.team.name
     def __str__(self):
         return self.team.name
-'''
+
 class kagscore1(models.Model):
     date=models.DateTimeField(auto_now=False, auto_now_add=False,default=timezone.now,null=True)
     sco=models.FloatField(null=True,default=0.0)
@@ -168,3 +168,4 @@ class chatmes(models.Model):
         return self.text
     def __str__(self):
         return self.text
+'''
