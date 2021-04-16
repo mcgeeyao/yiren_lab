@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainsite.apps.MainsiteConfig',
     'channels',
+    'django_crontab',
 ]
 
 ASGI_APPLICATION = 'myweb.routing.application'
@@ -167,3 +168,11 @@ MEDIA_DIRS = [
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/assets/'
+
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+
+
+
+CRONJOBS=[
+    ('* * * * *','mainsite.views.cron')
+]

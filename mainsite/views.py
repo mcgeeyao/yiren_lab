@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.shortcuts import render,redirect
 from django.http import HttpResponse ,Http404,JsonResponse
 from django.db.models import Count
+from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 from mainsite import forms
 from .models import *
@@ -643,6 +644,7 @@ def logout(request):
     request.session.pop("userid",None)
     request.session.pop("course",None)
     request.session.pop("name",None)
+    request.session.pop("team",None)
     return TemplateResponse(request, 'index.html', locals())
 
 def userpro(request):
@@ -682,7 +684,7 @@ def userpro(request):
     
     return TemplateResponse(request, 'userpro.html', locals())
 
-def mypy(request):
+def myml(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
@@ -788,7 +790,7 @@ def mypy(request):
 
 
 
-    return TemplateResponse(request, 'mypy.html', locals())
+    return TemplateResponse(request, 'myml.html', locals())
 
 def searchname(request):
 
@@ -1036,23 +1038,70 @@ def searchid(request):
     return JsonResponse({'res': table})
 
 
-def myml(request):
+def mypy(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
     now=datetime.now()
-    return TemplateResponse(request, 'myml.html', locals())
+    return TemplateResponse(request, 'mypy.html', locals())
 
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import f1_score
 
 def kaggle(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
+        times=Team.objects.get(name=team).__dict__['test_t']
+        tf=Team.objects.filter(name=team)
+        t=Team.objects.get(name=team)
     now=datetime.now()
-    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-    shape=y.shape
+    #上傳對答案表單
+    if request.method == 'POST' :
+        if 'team' in request.session:
+            times=Team.objects.get(name=team).__dict__['test_t']
+            if times==0:
+                message='次數用完'
+            else:
+                try:
+                    test_file=request.FILES["file"]
+                    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
+                    yhat=pd.read_csv(test_file,header=None)
+                    if len(y)==len(yhat):
+                        score=accuracy_score(y,yhat)
+                        times-=1
+                        tf.update(test_t=times)
+                        kagscore.objects.create(sco=score,team=t)
+                    else:
+                        message='格式錯誤'
+                except:
+                    message='請選擇檔案'
+        else:
+            message='請先登入'
+    times=str(times)
+    #排名表
+    all_team=Team.objects.all()
+    
+    for i in all_team:
+        team_score=kagscore.objects.filter(team=i)
+        team_score_list=[]
+        for j in team_score:
+            team_score_list.append(j.sco)
+        record=max(team_score_list)
+    
+    #各組上傳紀錄表
+    if 'userid' in request.session:
+        teamscore=kagscore.objects.filter(team=t)
+        teamscore_table=[]
+        for i in teamscore:
+            teamscore_table.append(f'<tr><td>{i.date}</td><td>{i.sco}</td></tr>')
+
+
     return TemplateResponse(request, 'kaggle.html', locals())
 
 def kaggle1(request):
@@ -1134,3 +1183,11 @@ def chat2(request):
 
 def game(request):
     return TemplateResponse(request, 'phaser.html')
+
+
+
+def cron(request):
+    if 'userid' in request.session:
+        team=request.session['team']
+    t=Team.objects.filter(name=team)
+    t.update(test_t=5)

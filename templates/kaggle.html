@@ -1,20 +1,52 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 <a href="/kaggle1/">
-<div class="btn" style="margin:10px; width:16%; display:inline-block">
+<div class="btn" id='kagbtn'>
     台新資料
 </div><a/>
 <a href="/kaggle2/">
-<div class="btn" style="margin:10px; width:16%; display:inline-block">
+<div id='kagbtn' class="btn" >
     GPU Kernel Performance
 </div><a/>
 <a href="/kaggle3/">
-<div class="btn" style="margin:10px; width:16%; display:inline-block">
+<div class="btn" id='kagbtn' >
     Classify Gestures
 </div><a/>
 <a href="/kaggle4/">
-<div class="btn" style="margin:10px; width:16%; display:inline-block">
+<div class="btn" id='kagbtn' >
     Bankruptcy Prediction
 </div><a/>
+
+
+
+<form enctype="multipart/form-data" method="post">{% csrf_token %}
+    <label for="file">檔案</label>
+    <input type="file" id="file" name="file">
+    {% if message %}
+    <p style="color: #ee0000;">{{message}}</p>
+    {% endif %}
+    <input type="submit" value="確認" class="btn"><br>
+</form>
+{% if score %}
+分數為{{score}}！！
+{%endif%}
+{% if times %}
+次數剩餘{{times}}次
+{%endif%}
+<br>
+{% if teamscore_table %}
+    <table id='score' class='kagscore' style="width:50%; margin:0 auto;text-align: center;">
+    <tr>
+        <th>Date</th>
+        <th>Score</th>
+    </tr>
+    {% for score in teamscore_table%}
+        {{score | safe}}
+    {% endfor %}
+    <table/>
+{%endif%}
+{{record}}
+{{team_score}}
+{{a}}
 {% endblock %}

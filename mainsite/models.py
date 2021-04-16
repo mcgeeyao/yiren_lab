@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import datetime
 
 # Create your models here.
 
@@ -18,6 +19,10 @@ class Post(models.Model):
 class Team(models.Model):
     name=models.CharField(max_length=20,null=False)
     test_t=models.IntegerField(default=0,null=True)
+    test_t1=models.IntegerField(default=0,null=True)
+    test_t2=models.IntegerField(default=0,null=True)
+    test_t3=models.IntegerField(default=0,null=True)
+    test_t4=models.IntegerField(default=0,null=True)
 
     class Meta:
         ordering = ['name']
@@ -84,74 +89,69 @@ class kagglefile(models.Model):
     kaggle_field = models.FileField(null=True)
 
 class kagscore(models.Model):
-    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=datetime.now)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField(null=True)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['num']
+        ordering = ['date']
 
     def __uncode__(self):
-        return self.team
+        return self.team.name
     def __str__(self):
-        return self.team
+        return self.team.name
 
 class kagscore1(models.Model):
-    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=datetime.now)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField(null=True)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['num']
+        ordering = ['date']
 
     def __uncode__(self):
-        return self.team
+        return self.team.name
     def __str__(self):
-        return self.team
+        return self.team.name
 
 class kagscore2(models.Model):
-    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=datetime.now)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField(null=True)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['num']
+        ordering = ['date']
 
     def __uncode__(self):
-        return self.team
+        return self.team.name
     def __str__(self):
-        return self.team
+        return self.team.name
 
 class kagscore3(models.Model):
-    date=models.ForeignKey(Week,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=datetime.now)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField(null=True)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['num']
+        ordering = ['date']
 
     def __uncode__(self):
-        return self.team
+        return self.team.name
     def __str__(self):
-        return self.team
+        return self.team.name
 
 class kagscore4(models.Model):
-    week=models.ForeignKey(Week,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=False, auto_now_add=False,default=datetime.now)
     sco=models.FloatField(null=True,default=0.0)
-    num=models.IntegerField(null=True)
     team=models.ForeignKey(Team,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['num']
+        ordering = ['date']
 
     def __uncode__(self):
-        return self.team
+        return self.team.name
     def __str__(self):
-        return self.team
+        return self.team.name
 
 
 
