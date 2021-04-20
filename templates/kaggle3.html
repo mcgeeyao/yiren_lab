@@ -1,20 +1,68 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 <a href="/kaggle1/">
 <div class="btn" id='kagbtn'>
-    台新資料
-</div><a/>
+    個人資產預測
+</div></a>
 <a href="/kaggle2/">
 <div class="btn" id='kagbtn'>
     GPU Kernel Performance
-</div><a/>
+</div></a>
 <a href="/kaggle3/">
 <div class="btn" style="background-color: #6CcF70;color: white;" id='kagbtn'>
     Classify Gestures
-</div><a/>
+</div></a>
 <a href="/kaggle4/">
 <div class="btn" id='kagbtn'>
     Bankruptcy Prediction
-</div><a/>
+</div></a>
+
+
+<div style='width:100%'>
+<div style='display:inline-block;width:40%; margin:20px ;align-items: center;vertical-align:top'>
+    <div style='padding:10px;background-color:#ffffff; width:auto;border: 2px solid black;display:inline-block;color: black;border-radius:20px'>
+        資料說明 & baseline：<a href='https://colab.research.google.com/drive/1B7_0_O8nDcOdTGuDVgRlWv4Aw2SFb4kV?usp=sharing#scrollTo=DVbXaoABK58e' target="_blank" style='color: black;'>colab</a>
+        <br>
+        評估指標：<a href='https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score'target="_blank" style='color: black;'>accuracy</a><br>
+        答案格式：<br>
+        <img src={% static 'kag3.png' %} style="width: 100px;position:static;top: 10px;left: 0px;"/>   
+        <br>
+        ❈字不要打錯
+        <br><br>
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+        <label for="file">對答案：</label><br>
+        <input type="file" id="file" name="file">
+        {% if message %}
+        <p style="color: #ee0000;">{{message}}</p>
+        {% endif %}
+        <input type="submit" value="確認" class="btn"><br>
+    </form>
+    {% if score %}
+    分數為{{score}}！！
+    {%endif%}<br>
+    {% if times %}
+    次數剩餘{{times}}次
+    {%endif%}
+    </div>
+</div>  
+<div style='display:inline-block;width:50%; margin:20px;text-align: center;vertical-align:top'>
+{% if teamscore_table %}
+    <table id='score' class='kagscore' style="width:100%; margin:0 ;text-align: center;">
+    <tr>
+        <th>Date</th>
+        <th>Score</th>
+    </tr>
+    {% for score in teamscore_table%}
+        {{score | safe}}
+    {% endfor %}
+    {%if best%}
+    <tr><td>best score</td><td>{{best}}</td></tr>
+    {%endif%}
+    </table>
+{%endif%}
+</div>
+</div>
+<br>
+
 {% endblock %}

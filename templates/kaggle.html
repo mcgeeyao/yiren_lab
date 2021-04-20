@@ -3,50 +3,86 @@
 {% block content %}
 <a href="/kaggle1/">
 <div class="btn" id='kagbtn'>
-    台新資料
-</div><a/>
+    個人資產預測
+</div></a>
 <a href="/kaggle2/">
 <div id='kagbtn' class="btn" >
     GPU Kernel Performance
-</div><a/>
+</div></a>
 <a href="/kaggle3/">
 <div class="btn" id='kagbtn' >
     Classify Gestures
-</div><a/>
+</div></a>
 <a href="/kaggle4/">
 <div class="btn" id='kagbtn' >
     Bankruptcy Prediction
-</div><a/>
-
-
-
-<form enctype="multipart/form-data" method="post">{% csrf_token %}
-    <label for="file">檔案</label>
-    <input type="file" id="file" name="file">
-    {% if message %}
-    <p style="color: #ee0000;">{{message}}</p>
-    {% endif %}
-    <input type="submit" value="確認" class="btn"><br>
-</form>
-{% if score %}
-分數為{{score}}！！
-{%endif%}
-{% if times %}
-次數剩餘{{times}}次
-{%endif%}
+</div></a>
 <br>
-{% if teamscore_table %}
-    <table id='score' class='kagscore' style="width:50%; margin:0 auto;text-align: center;">
+
+
+
+<div style='width:24%;align-items: center;display: inline-block;vertical-align:top;'>
+<table id='score' class='kagscore' style="vertical-align:top; margin:5px; width:100%;">
+    <tr><th colspan="2">個人資產預測</th></tr>
+
     <tr>
-        <th>Date</th>
-        <th>Score</th>
+    <th>組別</th>
+    <th>分數</th>
     </tr>
-    {% for score in teamscore_table%}
-        {{score | safe}}
-    {% endfor %}
-    <table/>
-{%endif%}
-{{record}}
-{{team_score}}
-{{a}}
+    {%for k,v in dic1.items%}
+        <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+        </tr>
+    {%endfor%}
+</table>
+</div>
+
+<div style='width:24%;text-align: center;display: inline-block;vertical-align:top;'>
+<table id='score' class='kagscore' style="vertical-align:top; margin:5px; width:100%;">
+    <tr><th colspan="2">GPU Kernel Performance</th></tr>
+    <tr>
+    <th>組別</th>
+    <th>分數</th>
+    </tr>
+    {%for k,v in dic2.items%}
+        <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+        </tr>
+    {%endfor%}
+</table>
+</div>
+
+<div style='width:24%;text-align: center;display: inline-block;vertical-align:top;'>
+<table id='score' class='kagscore' style="vertical-align:top; margin:5px; width:100%;">
+    <tr><th colspan="2">Classify Gestures</th></tr>
+    <tr>
+    <th>組別</th>
+    <th>分數</th>
+    </tr>
+    {%for k,v in dic3.items%}
+        <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+        </tr>
+    {%endfor%}
+</table>
+</div>
+
+<div style='width:24%;text-align: center;display: inline-block;vertical-align:top;'>
+<table id='score' class='kagscore' style="vertical-align:top; margin:5px; width:100%;">
+    <tr><th colspan="2">Bankruptcy Prediction</th></tr>
+    <tr>
+    <th>組別</th>
+    <th>分數</th>
+    </tr>
+    {%for k,v in dic4.items%}
+        <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+        </tr>
+    {%endfor%}
+</table>
+</div>
 {% endblock %}

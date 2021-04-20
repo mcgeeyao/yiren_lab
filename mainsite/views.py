@@ -652,6 +652,7 @@ def userpro(request):
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
     else:
         redirect('/')
     now=datetime.now()
@@ -1058,48 +1059,36 @@ def kaggle(request):
         name=request.session['name']
         team=request.session['team']
         times=Team.objects.get(name=team).__dict__['test_t']
-        tf=Team.objects.filter(name=team)
-        t=Team.objects.get(name=team)
+        tfil=Team.objects.filter(name=team)
+        tget=Team.objects.get(name=team)
     now=datetime.now()
-    #上傳對答案表單
-    if request.method == 'POST' :
-        if 'team' in request.session:
-            times=Team.objects.get(name=team).__dict__['test_t']
-            if times==0:
-                message='次數用完'
-            else:
-                try:
-                    test_file=request.FILES["file"]
-                    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-                    yhat=pd.read_csv(test_file,header=None)
-                    if len(y)==len(yhat):
-                        score=accuracy_score(y,yhat)
-                        times-=1
-                        tf.update(test_t=times)
-                        kagscore.objects.create(sco=score,team=t)
-                    else:
-                        message='格式錯誤'
-                except:
-                    message='請選擇檔案'
-            times=str(times)
-        else:
-            message='請先登入'
-    #排名表
+
     all_team=Team.objects.all()
-    
-    for i in all_team:
-        team_score=kagscore.objects.filter(team=i)
-        team_score_list=[]
-        for j in team_score:
-            team_score_list.append(j.sco)
-        #record=max(team_score_list)
-    
-    #各組上傳紀錄表
-    if 'userid' in request.session:
-        teamscore=kagscore.objects.filter(team=t)
-        teamscore_table=[]
-        for i in teamscore:
-            teamscore_table.append(f'<tr><td>{i.date}</td><td>{i.sco}</td></tr>')
+
+    dic1={}
+    for t in all_team:
+        if team_best_score1(t.name)!=0:
+            dic1[t.name]=team_best_score1(t.name)
+    dic1=dict(sorted(dic1.items(), key=lambda item: item[1]))
+
+    dic2={}
+    for t in all_team:
+        if team_best_score2(t.name)!=0:
+            dic2[t.name]=team_best_score2(t.name)
+    dic2=dict(sorted(dic2.items(), key=lambda item: item[1]))
+
+    dic3={}
+    for t in all_team:
+        if team_best_score3(t.name)!=0:
+            dic3[t.name]=team_best_score3(t.name)
+    dic3=dict(sorted(dic3.items(), key=lambda item: item[1],reverse=True))
+
+    dic4={}
+    for t in all_team:
+        if team_best_score4(t.name)!=0:
+            dic4[t.name]=team_best_score4(t.name)
+    dic4=dict(sorted(dic4.items(), key=lambda item: item[1],reverse=True))
+
 
 
     return TemplateResponse(request, 'kaggle.html', locals())
@@ -1109,40 +1098,233 @@ def kaggle1(request):
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
+        times=Team.objects.get(name=team).__dict__['test_t1']
+        tfil=Team.objects.filter(name=team)
+        tget=Team.objects.get(name=team)
     now=datetime.now()
-    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-    shape=y.shape
+    #上傳對答案表單
+    if request.method == 'POST' :
+        if 'team' in request.session:
+            times=Team.objects.get(name=team).__dict__['test_t1']
+            if times==0:
+                message='次數用完'
+            else:
+                try:
+                    test_file=request.FILES["file"]
+                    ydf=pd.read_csv(MEDIA_ROOT+'/Task_1_ans (1).csv')
+                    y=ydf['AUM_M13']
+                    yhatdf=pd.read_csv(test_file)
+                    yhat=yhatdf['AUM_M13']
+                    if len(y)==len(yhat):
+                        score=mean_squared_error(y,yhat)
+                        times-=1
+                        tfil.update(test_t1=times)
+                        kagscore1.objects.create(sco=score,team=tget)
+                    else:
+                        message='格式錯誤'
+                except:
+                    message='格式錯誤'
+            times=str(times)
+        else:
+            message='請先登入'
+    
+    #各組上傳紀錄表
+    if 'userid' in request.session:
+        times=str(times)
+        teamscore=kagscore1.objects.filter(team=tget)
+        teamscore_table=[]
+        for i in teamscore:
+            teamscore_table.append(f'<tr><td>{str(i.date)[:-16]}</td><td>{i.sco}</td></tr>')
+        best=team_best_score1(team)
     return TemplateResponse(request, 'kaggle1.html', locals())
+
+def team_best_score1(team):
+    tfil=Team.objects.filter(name=team)
+    tget=Team.objects.get(name=team)
+    all_score=kagscore1.objects.filter(team=tget)
+    all_score_list=[]
+    for i in all_score:
+        all_score_list.append(i.sco)
+    try:
+        record=min(all_score_list)
+    except:
+        record=0
+    return record
 
 def kaggle2(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
+        times=Team.objects.get(name=team).__dict__['test_t2']
+        tfil=Team.objects.filter(name=team)
+        tget=Team.objects.get(name=team)
     now=datetime.now()
-    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-    shape=y.shape
+    #上傳對答案表單
+    if request.method == 'POST' :
+        if 'team' in request.session:
+            times=Team.objects.get(name=team).__dict__['test_t2']
+            if times==0:
+                message='次數用完'
+            else:
+                #try:
+                test_file=request.FILES["file"]
+                y=pd.read_csv(MEDIA_ROOT+'/Task_3_ans.csv')['Run_mean']
+                yhat=pd.read_csv(test_file)['Run_mean']
+                if len(y)==len(yhat):
+                    score=mean_squared_error(y,yhat)
+                    times-=1
+                    tfil.update(test_t2=times)
+                    kagscore2.objects.create(sco=score,team=tget)
+                else:
+                    message='格式錯誤'
+                #except:
+                    #message='格式錯誤'
+            times=str(times)
+        else:
+            message='請先登入'
+    
+    #各組上傳紀錄表
+    if 'userid' in request.session:
+        times=str(times)
+        teamscore=kagscore2.objects.filter(team=tget)
+        teamscore_table=[]
+        for i in teamscore:
+            teamscore_table.append(f'<tr><td>{str(i.date)[:16]}</td><td>{i.sco}</td></tr>')
+        best=team_best_score2(team)
+
     return TemplateResponse(request, 'kaggle2.html', locals())
+
+def team_best_score2(team):
+    tfil=Team.objects.filter(name=team)
+    tget=Team.objects.get(name=team)
+    all_score=kagscore2.objects.filter(team=tget)
+    all_score_list=[]
+    for i in all_score:
+        all_score_list.append(i.sco)
+    try:
+        record=min(all_score_list)
+    except:
+        record=0
+    return record
 
 def kaggle3(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
+        times=Team.objects.get(name=team).__dict__['test_t3']
+        tfil=Team.objects.filter(name=team)
+        tget=Team.objects.get(name=team)
     now=datetime.now()
-    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-    shape=y.shape
+    #上傳對答案表單
+    if request.method == 'POST' :
+        if 'team' in request.session:
+            times=Team.objects.get(name=team).__dict__['test_t3']
+            if times==0:
+                message='次數用完'
+            else:
+                try:
+                    test_file=request.FILES["file"]
+                    y=pd.read_csv(MEDIA_ROOT+'/Task_4_ans.csv')['label']
+                    yhat=pd.read_csv(test_file)['label']
+                    if len(y)==len(yhat):
+                        score=accuracy_score(y,yhat)
+                        times-=1
+                        tfil.update(test_t3=times)
+                        kagscore3.objects.create(sco=score,team=tget)
+                    else:
+                        message='格式錯誤'
+                except:
+                    message='格式錯誤'
+            times=str(times)
+        else:
+            message='請先登入'
+    
+    #各組上傳紀錄表
+    if 'userid' in request.session:
+        times=str(times)
+        teamscore=kagscore3.objects.filter(team=tget)
+        teamscore_table=[]
+        for i in teamscore:
+            teamscore_table.append(f'<tr><td>{str(i.date)[:16]}</td><td>{i.sco}</td></tr>')
+        best=team_best_score3(team)
+
     return TemplateResponse(request, 'kaggle3.html', locals())
+
+def team_best_score3(team):
+    tfil=Team.objects.filter(name=team)
+    tget=Team.objects.get(name=team)
+    all_score=kagscore3.objects.filter(team=tget)
+    all_score_list=[]
+    for i in all_score:
+        all_score_list.append(i.sco)
+    try:
+        record=max(all_score_list)
+    except:
+        record=0
+    return record
 
 def kaggle4(request):
     if 'userid' in request.session:
         userid=request.session['userid']
         course=request.session['course']
         name=request.session['name']
+        team=request.session['team']
+        times=Team.objects.get(name=team).__dict__['test_t4']
+        tfil=Team.objects.filter(name=team)
+        tget=Team.objects.get(name=team)
     now=datetime.now()
-    y=pd.read_csv(MEDIA_ROOT+'/medline_task.csv',header=None)
-    shape=y.shape
+    #上傳對答案表單
+    if request.method == 'POST' :
+        if 'team' in request.session:
+            times=Team.objects.get(name=team).__dict__['test_t4']
+            if times==0:
+                message='次數用完'
+            else:
+                try:
+                    test_file=request.FILES["file"]
+                    y=pd.read_csv(MEDIA_ROOT+'/Task_2_ans.csv')['bankruptcy']
+                    yhat=pd.read_csv(test_file)['bankruptcy']
+                    if len(y)==len(yhat):
+                        score=f1_score(y,yhat)
+                        times-=1
+                        tfil.update(test_t4=times)
+                        kagscore4.objects.create(sco=score,team=tget)
+                    else:
+                        message='格式錯誤'
+                except:
+                    message='格式錯誤'
+            times=str(times)
+        else:
+            message='請先登入'
+    
+    #各組上傳紀錄表
+    if 'userid' in request.session:
+        times=str(times)
+        teamscore=kagscore4.objects.filter(team=tget)
+        teamscore_table=[]
+        for i in teamscore:
+            teamscore_table.append(f'<tr><td>{str(i.date)[:16]}</td><td>{i.sco}</td></tr>')
+        best=team_best_score4(team)
+
     return TemplateResponse(request, 'kaggle4.html', locals())
+
+def team_best_score4(team):
+    tfil=Team.objects.filter(name=team)
+    tget=Team.objects.get(name=team)
+    all_score=kagscore4.objects.filter(team=tget)
+    all_score_list=[]
+    for i in all_score:
+        all_score_list.append(i.sco)
+    try:
+        record=max(all_score_list)
+    except:
+        record=0
+    return record
 
 
 def chat(request):
