@@ -174,5 +174,6 @@ DATETIME_FORMAT = 'Y-m-d H:i:s'
 
 
 CRONJOBS=[
-    ('0 0 * * *','mainsite.cron.cron')
+    ('0 0 * * *','mainsite.cron.cron'),
+    ('25 * * * *','mainsite.cron.cron')
 ]
