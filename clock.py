@@ -1,7 +1,7 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
-from .models import Team
+from mainsite.models import Team
 
 
 
