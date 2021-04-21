@@ -3,17 +3,7 @@ from django.utils import timezone
 
 # Create your models here.
 
-class Post(models.Model):
-    title=models.CharField(max_length=200)
-    slug=models.CharField(max_length=200)
-    body=models.TextField()
-    pub_date=models.DateTimeField(default=timezone.now)
-    
-    class Meta:
-        ordering = ['-pub_date']
 
-    def __uncode__(self):
-        return self.title
 
 class Team(models.Model):
     name=models.CharField(max_length=20,null=False)
@@ -30,7 +20,17 @@ class Team(models.Model):
         return self.name
     def __str__(self):
         return self.name
+class Post(models.Model):
+    title=models.CharField(max_length=200)
+    slug=models.CharField(max_length=200)
+    body=models.TextField()
+    pub_date=models.DateTimeField(default=timezone.now)
+    
+    class Meta:
+        ordering = ['-pub_date']
 
+    def __uncode__(self):
+        return self.title
 class User(models.Model):
     name=models.CharField(max_length=20,null=False)
     class_choices=[

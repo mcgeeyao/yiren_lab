@@ -1,12 +1,12 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
-from mainsite.models import Team
 
 
 
 @sched.scheduled_job('interval', minutes=3)
 def timed_job():
+    from mainsite.models import Team
     t=Team.objects.all()
     t.update(test_t1=3)
     t.update(test_t2=3)
