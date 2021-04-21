@@ -1,5 +1,5 @@
-from .models import *
-
+from . import models
+from .models import Team
 
 
 t=Team.objects.all()

@@ -1169,19 +1169,19 @@ def kaggle2(request):
             if times==0:
                 message='次數用完'
             else:
-                #try:
-                test_file=request.FILES["file"]
-                y=pd.read_csv(MEDIA_ROOT+'/Task_3_ans.csv')['Run_mean']
-                yhat=pd.read_csv(test_file)['Run_mean']
-                if len(y)==len(yhat):
-                    score=mean_squared_error(y,yhat)
-                    times-=1
-                    tfil.update(test_t2=times)
-                    kagscore2.objects.create(sco=score,team=tget)
-                else:
+                try:
+                    test_file=request.FILES["file"]
+                    y=pd.read_csv(MEDIA_ROOT+'/Task_3_ans.csv')['Run_mean']
+                    yhat=pd.read_csv(test_file)['Run_mean']
+                    if len(y)==len(yhat):
+                        score=mean_squared_error(y,yhat)
+                        times-=1
+                        tfil.update(test_t2=times)
+                        kagscore2.objects.create(sco=score,team=tget)
+                    else:
+                        message='格式錯誤'
+                except:
                     message='格式錯誤'
-                #except:
-                    #message='格式錯誤'
             times=str(times)
         else:
             message='請先登入'
