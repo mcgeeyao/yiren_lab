@@ -108,7 +108,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myweb.wsgi.application'
-django.setup()
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
