@@ -1,3 +1,5 @@
+import django
+django.setup()
 from mainsite.models import Team
 
 
