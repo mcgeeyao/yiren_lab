@@ -1,4 +1,4 @@
-from .models import Team
+from mainsite.models import Team
 
 
 t=Team.objects.all()
