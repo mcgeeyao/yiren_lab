@@ -1,3 +1,5 @@
+import django
+django.setup()
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
