@@ -12,6 +12,7 @@ def timed_job():
     t.update(test_t2=3)
     t.update(test_t3=3)
     t.update(test_t4=3)
+
 @sched.scheduled_job('cron', day_of_week='mon-fri', hour=17)
 def scheduled_job():
     print('This job is run every weekday at 5pm.')
