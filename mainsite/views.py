@@ -1229,7 +1229,7 @@ def kaggle3(request):
             else:
                 try:
                     test_file=request.FILES["file"]
-                    y=pd.read_csv(MEDIA_ROOT+'/Task_4_ans.csv')['label']
+                    y=pd.read_csv(MEDIA_ROOT+'/Task_4_ans (1).csv')['label']
                     yhat=pd.read_csv(test_file)['label']
                     if len(y)==len(yhat):
                         score=accuracy_score(y,yhat)
