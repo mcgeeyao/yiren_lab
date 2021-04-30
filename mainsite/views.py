@@ -1068,8 +1068,10 @@ def kaggle(request):
     dic1={}
     for t in all_team:
         if team_best_score1(t.name)!=0:
-            dic1[t.name]=round(team_best_score1(t.name),3).__format__(',')
+            dic1[t.name]=round(team_best_score1(t.name),3)
     dic1=dict(sorted(dic1.items(), key=lambda item: item[1]))
+    for i in dic1:
+        dic1[i]=dic1[i].__format__(',')
 
     dic2={}
     for t in all_team:
