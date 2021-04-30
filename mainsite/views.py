@@ -753,7 +753,7 @@ def myml(request):
             for a in range(weeksum):
                     for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][0][b]}</td>')
-            table.append(f'<td>{tolsum[j][0]}</td></tr>')
+            table.append(f'<td>{round(tolsum[j][0],2)}</td></tr>')
             for i in range(1,len(members[j])):
                 table.append(f'''<tr {sesuser[j][i]}>
                 <td>{memid[j][i]}</td>
@@ -762,7 +762,7 @@ def myml(request):
                 for a in range(weeksum):
                     for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][i][b]}</td>')
-                table.append(f'<td>{tolsum[j][i]}</td></tr>')
+                table.append(f'<td>{round(tolsum[j][i],2)}</td></tr>')
             
         table=''.join(table)
     else:
@@ -776,7 +776,7 @@ def myml(request):
             for a in range(weeksum):
                     for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][0][b]}</td>')
-            table.append(f'<td>{tolsum[j][0]}</td></tr>')
+            table.append(f'<td>{round(tolsum[j][0],2)}</td></tr>')
             for i in range(1,len(members[j])):
                 table.append(f'''<tr>
                 <td>{memid[j][i]}</td>
@@ -785,7 +785,7 @@ def myml(request):
                 for a in range(weeksum):
                     for b in range(weeknums[a]):
                         table.append(f'<td>{tol[a][j][i][b]}</td>')
-                table.append(f'<td>{tolsum[j][i]}</td></tr>')
+                table.append(f'<td>{round(tolsum[j][i],2)}</td></tr>')
             
         table=''.join(table)
 
@@ -1068,25 +1068,25 @@ def kaggle(request):
     dic1={}
     for t in all_team:
         if team_best_score1(t.name)!=0:
-            dic1[t.name]=team_best_score1(t.name)
+            dic1[t.name]=round(team_best_score1(t.name),3).__format__(',')
     dic1=dict(sorted(dic1.items(), key=lambda item: item[1]))
 
     dic2={}
     for t in all_team:
         if team_best_score2(t.name)!=0:
-            dic2[t.name]=team_best_score2(t.name)
+            dic2[t.name]=round(team_best_score2(t.name),3)
     dic2=dict(sorted(dic2.items(), key=lambda item: item[1]))
 
     dic3={}
     for t in all_team:
         if team_best_score3(t.name)!=0:
-            dic3[t.name]=team_best_score3(t.name)
+            dic3[t.name]=round(team_best_score3(t.name),3)
     dic3=dict(sorted(dic3.items(), key=lambda item: item[1],reverse=True))
 
     dic4={}
     for t in all_team:
         if team_best_score4(t.name)!=0:
-            dic4[t.name]=team_best_score4(t.name)
+            dic4[t.name]=round(team_best_score4(t.name),3)
     dic4=dict(sorted(dic4.items(), key=lambda item: item[1],reverse=True))
 
 
