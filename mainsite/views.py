@@ -1068,29 +1068,45 @@ def kaggle(request):
     dic1={}
     for t in all_team:
         if team_best_score1(t.name)!=0:
-            dic1[t.name]=round(team_best_score1(t.name),3)
-    dic1=dict(sorted(dic1.items(), key=lambda item: item[1]))
+            tget=Team.objects.get(name=t.name)
+            dic1[t.name]=[round(team_best_score1(t.name),3),len(kagscore1.objects.filter(team=tget))]
+    dic1=dict(sorted(dic1.items(), key=lambda item: item[1][0]))
     for i in dic1:
-        dic1[i]=dic1[i].__format__(',')
+        dic1[i]=[dic1[i][0].__format__(','),dic1[i][1]]
+    table1=''
+    for i,j in dic1.items():
+        table1+=f'<tr><td>{i}</td><td>{j[0]}</td><td>{j[1]}</td></tr>'
+
 
     dic2={}
     for t in all_team:
+        tget=Team.objects.get(name=t.name)
         if team_best_score2(t.name)!=0:
-            dic2[t.name]=round(team_best_score2(t.name),3)
-    dic2=dict(sorted(dic2.items(), key=lambda item: item[1]))
+            dic2[t.name]=[round(team_best_score2(t.name),3),len(kagscore2.objects.filter(team=tget))]
+    dic2=dict(sorted(dic2.items(), key=lambda item: item[1][0]))
+    table2=''
+    for i,j in dic2.items():
+        table2+=f'<tr><td>{i}</td><td>{j[0]}</td><td>{j[1]}</td></tr>'
 
     dic3={}
     for t in all_team:
+        tget=Team.objects.get(name=t.name)
         if team_best_score3(t.name)!=0:
-            dic3[t.name]=round(team_best_score3(t.name),3)
-    dic3=dict(sorted(dic3.items(), key=lambda item: item[1],reverse=True))
+            dic3[t.name]=[round(team_best_score3(t.name),3),len(kagscore3.objects.filter(team=tget))]
+    dic3=dict(sorted(dic3.items(), key=lambda item: item[1][0],reverse=True))
+    table3=''
+    for i,j in dic3.items():
+        table3+=f'<tr><td>{i}</td><td>{j[0]}</td><td>{j[1]}</td></tr>'
 
     dic4={}
     for t in all_team:
+        tget=Team.objects.get(name=t.name)
         if team_best_score4(t.name)!=0:
-            dic4[t.name]=round(team_best_score4(t.name),3)
-    dic4=dict(sorted(dic4.items(), key=lambda item: item[1],reverse=True))
-
+            dic4[t.name]=[round(team_best_score4(t.name),3),len(kagscore4.objects.filter(team=tget))]
+    dic4=dict(sorted(dic4.items(), key=lambda item: item[1][0],reverse=True))
+    table4=''
+    for i,j in dic4.items():
+        table4+=f'<tr><td>{i}</td><td>{j[0]}</td><td>{j[1]}</td></tr>'
 
 
     return TemplateResponse(request, 'kaggle.html', locals())

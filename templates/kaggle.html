@@ -23,66 +23,50 @@
 
 
 <table id='score' class='kagscore' style="vertical-align:top; margin:5px; max-width:24%;display:inline-block">
-    <tr><th colspan="2">個人資產預測</th></tr>
+    <tr><th colspan="3">個人資產預測</th></tr>
 
     <tr>
     <th>組別</th>
     <th>分數</th>
+    <th>次數</th>
     </tr>
-    {%for k,v in dic1.items%}
-        <tr>
-        <td>{{k}}</td>
-        <td>{{v}}</td>
-        </tr>
-    {%endfor%}
+{{table1 | safe}}
 </table>
 </div>
 
 
 <table id='score' class='kagscore' style="vertical-align:top; margin:5px; max-width:24%;display:inline-block">
-    <tr><th colspan="2">GPU Kernel Performance</th></tr>
+    <tr><th colspan="3">GPU Kernel Performance</th></tr>
     <tr>
     <th>組別</th>
     <th>分數</th>
+    <th>次數</th>
     </tr>
-    {%for k,v in dic2.items%}
-        <tr>
-        <td>{{k}}</td>
-        <td>{{v}}</td>
-        </tr>
-    {%endfor%}
+{{table2 | safe}}
 </table>
 </div>
 
 
 <table id='score' class='kagscore' style="vertical-align:top; margin:5px; max-width:24%;display:inline-block">
-    <tr><th colspan="2">Classify Gestures</th></tr>
+    <tr><th colspan="3">Classify Gestures</th></tr>
     <tr>
     <th>組別</th>
     <th>分數</th>
+    <th>次數</th>
     </tr>
-    {%for k,v in dic3.items%}
-        <tr>
-        <td>{{k}}</td>
-        <td>{{v}}</td>
-        </tr>
-    {%endfor%}
+{{table3 | safe}}
 </table>
 </div>
 
 
 <table id='score' class='kagscore' style="vertical-align:top; margin:5px; max-width:24%;display:inline-block">
-    <tr><th colspan="2">Bankruptcy Prediction</th></tr>
+    <tr><th colspan="3">Bankruptcy Prediction</th></tr>
     <tr>
     <th>組別</th>
     <th>分數</th>
+        <th>次數</th>
     </tr>
-    {%for k,v in dic4.items%}
-        <tr>
-        <td>{{k}}</td>
-        <td>{{v}}</td>
-        </tr>
-    {%endfor%}
+{{table4 | safe}}
 </table>
 </div>
 {% endblock %}
