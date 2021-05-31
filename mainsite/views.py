@@ -1092,7 +1092,7 @@ def kaggle(request):
     for t in all_team:
         tget=Team.objects.get(name=t.name)
         if team_best_score3(t.name)!=0:
-            dic3[t.name]=[round(team_best_score3(t.name),3),len(kagscore3.objects.filter(team=tget))]
+            dic3[t.name]=[round(team_best_score3(t.name),5),len(kagscore3.objects.filter(team=tget))]
     dic3=dict(sorted(dic3.items(), key=lambda item: item[1][0],reverse=True))
     table3=''
     for i,j in dic3.items():
