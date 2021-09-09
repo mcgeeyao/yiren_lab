@@ -1077,7 +1077,7 @@ def kaggle(request):
             tget=Team.objects.get(name=t.name)
             dic1[t.name]=[round(team_best_score1(t.name),3),len(kagscore1.objects.filter(team=tget))]
     dic1=dict(sorted(dic1.items(), key=lambda item: item[1][0]))
-    for i in (dic1)):
+    for i in (dic1):
         dic1[i]=[dic1[i][0].__format__(','),dic1[i][1]]
     table1=''
     for i,j in dic1.items():
