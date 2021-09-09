@@ -27,7 +27,7 @@ def index(request):
         name=request.session['name']
     html=template.render(locals())
     return HttpResponse(html)
-
+#登入畫面
 def login(request):
     if request.method=="POST":
         login_form=forms.LoginForm(request.POST)
@@ -57,7 +57,7 @@ def login(request):
     request_context.push(locals())
     #html=template.render(request_context)
     return TemplateResponse(request, 'login.html', locals())
-
+#改密碼
 def changepsw(request):
     if 'userid' in request.session:
         userid=request.session['userid']
@@ -622,6 +622,7 @@ def neweek(request):
             try:
                 name=request.POST["name"].strip()
                 num=request.POST["num"]
+                #create week!!
                 Week.objects.create(name=name,nums=num)
                 week=Week.objects.get(name=name,nums=num)
                 user=User.objects.all().order_by('id')
@@ -1047,6 +1048,11 @@ def mypy(request):
     now=datetime.now()
     return TemplateResponse(request, 'mypy.html', locals())
 
+
+
+
+#這裡是競賽的
+#team_best_score只是回傳該組的最高分數
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
@@ -1071,7 +1077,7 @@ def kaggle(request):
             tget=Team.objects.get(name=t.name)
             dic1[t.name]=[round(team_best_score1(t.name),3),len(kagscore1.objects.filter(team=tget))]
     dic1=dict(sorted(dic1.items(), key=lambda item: item[1][0]))
-    for i in range(len(dic1)):
+    for i in (dic1)):
         dic1[i]=[dic1[i][0].__format__(','),dic1[i][1]]
     table1=''
     for i,j in dic1.items():
@@ -1345,6 +1351,9 @@ def team_best_score4(team):
     return record
 
 
+
+
+#下面是之前練習的
 def chat(request):
     c=request.GET.get('v')
     chatmes.objects.create(text=str(c))
